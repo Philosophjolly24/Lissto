@@ -1,0 +1,54 @@
+.navbar-section {
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+    text-decoration: none;
+    gap: 20px;
+    width: 100%;
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    background-color: #0576c7f3;
+    left: 0;
+    height: 200px;
+    width: 100%;
+    transition: all 0.5s ease 0s;
+    z-index: 100;
+    top: -200px;
+}
+
+.navbar-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    width: 100%;
+    font-size: 32px;
+    font-weight: 700;
+    text-align: center;
+}
+
+@keyframes show-navbar-animation {
+    from {
+        top: -200px;
+    }
+
+    to {
+        top: 0px;
+    }
+}
+
+.hide-nav {
+    transition: all 0.5s ease 0s;
+    transform: translateY(-200px);
+
+}
+
+.show-nav {
+    animation-iteration-count: 1;
+    animation: show-navbar-animation 0.3s forwards;
+}

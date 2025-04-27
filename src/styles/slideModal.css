@@ -1,0 +1,108 @@
+.slide-modal {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    bottom: 0px;
+    left: 0;
+    width: 100%;
+    height: 45vh;
+    z-index: 1000;
+    transform: translateY(110%);
+    transition: transform 0.7s ease;
+    background-color: white;
+    padding: 1rem;
+    border-radius: 1rem 1rem 0 0;
+    gap: 20px;
+
+    >.title-section {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        /* justify-content: space-between; */
+
+        >.modal-item {
+            width: 100%;
+            display: flex;
+            /* align-items: center; */
+            justify-content: center;
+            font-size: 28px;
+            text-decoration: underline;
+            text-align: center;
+        }
+
+        >.close {
+            margin-bottom: 30px;
+            width: 28px;
+            height: 28px;
+        }
+    }
+
+
+
+    >.modal-price {
+        color: var(--light-text);
+        font-size: 28px;
+        font-weight: 700;
+        text-align: center;
+
+    }
+
+    >button {
+        display: block;
+        width: 80vw;
+        height: 60px;
+        border-radius: 25px;
+        border: none;
+        font-size: 20px;
+        font-weight: 620;
+        color: #fff;
+        background-color: var(--primary-color);
+
+    }
+
+}
+
+.slide-modal-visible {
+    transition: all 0.7s ease 0s;
+    transform: translateY(0);
+}
+
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    transition: all 0.7s ease 0s;
+    z-index: 1000;
+}
+
+.item-quantity {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+
+    >.quantity-input {
+        color: var(--light-text);
+        font-size: 28px;
+        font-weight: 700;
+        width: 50px;
+        height: 30px;
+        text-align: center;
+        border: none;
+
+        >&:focus {
+            border: 1px solid var(--light-text);
+            outline: none;
+        }
+    }
+
+    >.icon {
+        width: 24px;
+        height: 24px;
+    }
+}

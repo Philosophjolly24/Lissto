@@ -1,0 +1,54 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
+
+@import url('home.css');
+@import url('navbar.css');
+@import url('layout.css');
+@import url('search.css');
+@import url('lists.css');
+@import url('slideModal.css');
+@import url('createList.css');
+@import url('itemCount.css');
+@import url('checkbox.css');
+@import url('viewList.css');
+@import url('emojiPicker.css');
+
+#root {
+  --primary-color: #05769e;
+  --light-text: #666;
+  --subheading-spacing: 0.07em;
+}
+
+.hamburger-react {
+  position: absolute !important;
+  left: 10px;
+  top: 5px;
+  z-index: 999;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Nunito, 'arial';
+  text-decoration: none;
+
+}
+
+#root {
+  /* height: calc(100vh - 38.6px); */
+  height: 100svh;
+  display: flex;
+  margin: auto;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 85vw;
+}
+
+.hidden {
+  display: none;
+}
+
+.visible {
+  display: block;
+}

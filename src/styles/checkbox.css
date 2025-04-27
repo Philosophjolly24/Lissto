@@ -1,0 +1,54 @@
+.custom-checkbox {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    cursor: pointer;
+}
+
+/* Hidden native checkbox */
+.custom-checkbox input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+    height: 0;
+    width: 0;
+}
+
+/* Custom box */
+.checkmark {
+    min-width: 26px;
+    min-height: 26px;
+    background-color: #fff;
+    border: 2px solid var(--light-text);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+/* Checkmark tick */
+.custom-checkbox input:checked+.checkmark::after {
+    content: "";
+    position: absolute;
+    width: 6px;
+    height: 12px;
+    border: solid var(--primary-color);
+    border-width: 0 3px 3px 0;
+    transform: rotate(45deg);
+    bottom: 6px;
+}
+
+.custom-checkbox input:checked ~ .checkbox-label {
+    text-decoration: line-through;
+    color: var(--light-text);
+
+}
+
+/* Label text */
+.checkbox-label {
+    font-size: 16px;
+    color: #000;
+    margin: 0;
+
+}

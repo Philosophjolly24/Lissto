@@ -1,0 +1,19 @@
+.emoji-picker-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin-bottom: 25px;
+
+}
+
+.epr-category-nav {
+    display: none !important;
+}
+
+.emoji-default {
+    color: var(--light-text);
+    font-size: 18px;
+    text-align: center;
+    margin: 10px;
+}

@@ -1,0 +1,14 @@
+.view-items {
+    position: fixed;
+    bottom: 20px;
+    border: none;
+    width: 85vw;
+    height: 60px;
+    margin: auto;
+    color: #fff;
+    font-size: 20px;
+    font-weight: 700;
+    border-radius: 20px;
+    background-color: var(--primary-color);
+    z-index: 999
+}
