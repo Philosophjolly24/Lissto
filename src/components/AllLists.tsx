@@ -97,9 +97,7 @@ export default function Lists() {
           );
         })}
       </ul>
-      <div className="empty-space">
-        
-      </div>
+      <div className="empty-space"></div>
     </>
   );
 }

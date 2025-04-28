@@ -23,16 +23,21 @@ interface ListContextType {
   addList: (newList: List) => void;
   deleteList: (currentListName: string) => void;
   addItem: (listName: string, itemList: Item) => void;
+  mergeItems: () => void;
 }
 
 // constants
 const ListContext = createContext<ListContextType | undefined>(undefined);
 
 // ListProvider element
-const storedLists = localStorage.getItem("myLists");
-const initialList = storedLists !== null ? JSON.parse(storedLists) : [];
+function initialList() {
+  const storedLists = localStorage.getItem("myLists");
+  const lists = storedLists !== null ? JSON.parse(storedLists) : [];
+  return lists;
+}
+
 export const ListProvider = ({ children }: { children: ReactNode }) => {
-  const [lists, setLists] = useState<List[]>(initialList);
+  const [lists, setLists] = useState<List[]>(initialList());
 
   // Initialize lists from localStorage on mount
   useEffect(() => {
@@ -69,20 +74,31 @@ export const ListProvider = ({ children }: { children: ReactNode }) => {
 
   function addItem(listName: string, itemList: Item) {
     const updatedLists = lists.map((list: List) => {
-      if (list.listName === listName) {
+      if (list.listName === listName.trim()) {
         return {
           ...list,
-          items: [...(list.items || []), itemList],
+          items: [...list.items, itemList],
         };
       }
       return list;
     });
+    console.log(updatedLists);
     setLists(updatedLists);
   }
 
+  function mergeItems() {}
+  console.log(lists);
   return (
     <ListContext.Provider
-      value={{ lists, setLists, updateList, addList, deleteList, addItem }}
+      value={{
+        lists,
+        setLists,
+        updateList,
+        addList,
+        deleteList,
+        addItem,
+        mergeItems,
+      }}
     >
       {children}
     </ListContext.Provider>

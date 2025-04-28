@@ -48,16 +48,18 @@ export default function Search() {
   useEffect(() => {
     const productData = localStorage.getItem("productData");
     const products = productData ? JSON.parse(productData) : [];
-    const storedName = localStorage.getItem("currentList") || " ";
+    // const storedName = localStorage.getItem("currentList") || " ";
     const validProducts = products.filter((item: Item) => item.item !== "");
     setItems(validProducts);
-    console.log(storedName);
   }, []);
 
   useEffect(() => {
     //getting count of items in list
     const storedName = localStorage.getItem("currentList") || "";
-    const selected = lists.find((list: List) => list.listName == storedName);
+    console.log(storedName);
+    const selected = lists.find(
+      (list: List) => list.listName == storedName.trim()
+    );
     setItemCount(selected ? selected.items.length : 0);
   }, [lists]);
 
@@ -95,7 +97,7 @@ export default function Search() {
   };
   const navigate = useNavigate();
   const [isOpen, setOpen] = useState(false);
-
+  console.log(itemCount);
   // main component
   return (
     <>

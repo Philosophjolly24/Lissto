@@ -144,6 +144,7 @@ export default function List() {
           );
         })}
       </ul>
+      <div className="empty-space"></div>
       <button
         onClick={handleAddToList}
         className="border-primary-btn add-product"
