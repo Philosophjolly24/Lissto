@@ -57,7 +57,7 @@ export default function Lists() {
   return (
     <>
       <ul className="list-container">
-        {lists.map((list: List, _index, lists) => {
+        {lists.map((list: List) => {
           return (
             <SwipeableList fullSwipe={false} type={Type.IOS} key={list.id}>
               <SwipeableListItem
@@ -74,11 +74,7 @@ export default function Lists() {
                 >
                   <div className="emoji">{list.emoji}</div>
                   <div className="list-name-description-section">
-                    <h2 className="list-name">
-                      {lists.length > 0
-                        ? list.listName
-                        : "No lists? let make some!"}
-                    </h2>
+                    <h2 className="list-name">{list.listName}</h2>
                     <p className="description">
                       {list.description.trim() == ""
                         ? ""
@@ -101,6 +97,9 @@ export default function Lists() {
           );
         })}
       </ul>
+      <div className="empty-space">
+        
+      </div>
     </>
   );
 }

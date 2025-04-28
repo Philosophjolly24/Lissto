@@ -21,10 +21,9 @@ export default function EmojiPick({
       <EmojiPicker
         width={width}
         height={height}
-        searchPlaceHolder={searchPlaceholder}
+        searchPlaceholder={searchPlaceholder}
         lazyLoadEmojis={lazyLoadEmojis}
         autoFocusSearch={autoFocusSearch}
-        categories={[]}
         onEmojiClick={onEmojiClick}
       />
     </div>

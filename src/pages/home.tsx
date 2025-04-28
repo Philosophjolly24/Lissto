@@ -3,10 +3,11 @@ import Lists from "../components/AllLists";
 import HamburgerMenu from "../components/Hamburger";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { useList } from "../components/useList";
 
 export default function Home() {
   const [isOpen, setOpen] = useState(false);
-
+  const { lists } = useList();
   const navigate = useNavigate();
   return (
     <>
@@ -48,7 +49,9 @@ export default function Home() {
           }
         </nav>
       )}
-      <h2 className="home-sub-heading">Recently Saved</h2>
+      <h2 className="home-sub-heading">
+        {lists.length > 0 ? `Recently Saved` : `No lists? Let's make some!`}
+      </h2>
 
       <Lists></Lists>
       <button

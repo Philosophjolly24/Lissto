@@ -1,10 +1,11 @@
 // Imports
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import EmojiPick from "../components/EmojiPicker";
-import { EmojiClickData } from "emoji-picker-react";
+// import EmojiPick from "../components/EmojiPicker";
+// import { EmojiClickData } from "emoji-picker-react";
 import HamburgerMenu from "../components/Hamburger";
 import { useList } from "../components/useList";
+import "emoji-picker-element";
 
 export default function Create() {
   // states & hooks
@@ -45,9 +46,30 @@ export default function Create() {
     addList(newList);
     navigate(`/search`);
   }
-  const handleEmojiClick = (emojiData: EmojiClickData) => {
-    setText(emojiData.emoji);
-  };
+  // const handleEmojiClick = (emojiData: EmojiClickData) => {
+  //   setText(emojiData.emoji);
+  // };
+
+  useEffect(() => {
+    const emojiPicker = document.querySelector("emoji-picker");
+
+    const handleEmojiSelect = (event: CustomEvent) => {
+      const emoji = event.detail.unicode;
+      setText(emoji);
+    };
+
+    emojiPicker?.addEventListener(
+      "emoji-click",
+      handleEmojiSelect as EventListener
+    );
+
+    return () => {
+      emojiPicker?.removeEventListener(
+        "emoji-click",
+        handleEmojiSelect as EventListener
+      );
+    };
+  }, []);
 
   // Functional component
   return (
@@ -102,7 +124,6 @@ export default function Create() {
             required
           />
           {error && <p className="error">{error}</p>}
-
           <h3>Add a short description</h3>
           <textarea
             name="description"
@@ -114,12 +135,17 @@ export default function Create() {
             }}
           ></textarea>
           <h3>Choose an Icon</h3>
-          <EmojiPick
-            width={350}
-            height={350}
-            searchPlaceholder="search for an emoji"
-            onEmojiClick={handleEmojiClick}
-          ></EmojiPick>
+          {
+            // @ts-expect-error ignore below
+            <emoji-picker
+              class="light"
+              emoji-version="15.0"
+              search-placeholder="Search for emoji"
+              style={{ width: "350px", height: "350px", margin: " 20px auto" }}
+              show-preview="false"
+              //@ts-expect-error ignore  below
+            ></emoji-picker>
+          }
           <p className="emoji-default">Current emoji is {text}</p>
           <button
             className="border-primary-btn create-list-btn"
