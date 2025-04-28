@@ -29,8 +29,10 @@ interface ListContextType {
 const ListContext = createContext<ListContextType | undefined>(undefined);
 
 // ListProvider element
+const storedLists = localStorage.getItem("myLists");
+const initialList = storedLists !== null ? JSON.parse(storedLists) : [];
 export const ListProvider = ({ children }: { children: ReactNode }) => {
-  const [lists, setLists] = useState<List[]>([]);
+  const [lists, setLists] = useState<List[]>(initialList);
 
   // Initialize lists from localStorage on mount
   useEffect(() => {
@@ -61,8 +63,8 @@ export const ListProvider = ({ children }: { children: ReactNode }) => {
     const updatedLists = lists.filter(
       (list: List) => list.listName !== currentListName
     );
-
     setLists(updatedLists);
+    localStorage.setItem("myLists", JSON.stringify(lists));
   }
 
   function addItem(listName: string, itemList: Item) {
