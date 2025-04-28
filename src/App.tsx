@@ -1,13 +1,13 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/home";
 import Create from "./pages/create";
-// import Lists from "./components/AllLists";
 import Layout from "./components/layout";
 import Search from "./pages/search";
 import { useEffect, useState } from "react";
 import * as xlsx from "xlsx";
 import "../src/styles/index.css";
 import List from "./pages/list";
+import { ListProvider } from "./contexts/listContext";
 
 function App() {
   // excel to json data conversion
@@ -24,7 +24,7 @@ function App() {
     };
 
     fetchData();
-  }, []); // Empty dependency array to run this effect only once
+  }, []);
   useEffect(() => {
     if (jsonData.length > 0) {
       localStorage.setItem("productData", JSON.stringify(jsonData)); // Save to localStorage
@@ -32,16 +32,18 @@ function App() {
   }, [jsonData]);
   // =========================================== //
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Layout></Layout>}>
-          <Route index element={<Home></Home>}></Route>
-          <Route path="create-list" element={<Create></Create>}></Route>
-          <Route path="list" element={<List></List>}></Route>
-          <Route path="search" element={<Search></Search>}></Route>
-        </Route>
-      </Routes>
-    </BrowserRouter>
+    <ListProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Layout></Layout>}>
+            <Route index element={<Home></Home>}></Route>
+            <Route path="create-list" element={<Create></Create>}></Route>
+            <Route path="list" element={<List></List>}></Route>
+            <Route path="search" element={<Search></Search>}></Route>
+          </Route>
+        </Routes>
+      </BrowserRouter>
+    </ListProvider>
   );
 }
 

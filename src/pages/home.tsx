@@ -1,16 +1,13 @@
 import "../styles/index.css";
 import Lists from "../components/AllLists";
-// import { Link } from "react-router-dom";
 import HamburgerMenu from "../components/Hamburger";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
 export default function Home() {
   const [isOpen, setOpen] = useState(false);
-  const navigate = useNavigate();
-  // const listData = localStorage.getItem("myLists");
-  // const allLists = listData !== null ? JSON.parse(listData) : [];
 
+  const navigate = useNavigate();
   return (
     <>
       <div className="title-hamburger-container">

@@ -2,19 +2,23 @@
 import { useState, useEffect, useRef } from "react";
 import CustomSelect from "../components/dropbox";
 import SlideModal from "../components/SlideModal";
-import { addItem } from "../scripts/script";
 import { useNavigate } from "react-router-dom";
 import HamburgerMenu from "../components/Hamburger";
+import { useList } from "../components/useList";
 
-interface List {
-  listName?: string;
-  id: string;
-  items: Item[];
-}
 interface Item {
   item: string;
   quantity: number;
   price: number;
+  checked?: boolean;
+}
+
+interface List {
+  listName: string;
+  id: string;
+  items: Item[];
+  description: string;
+  emoji: string;
 }
 
 export default function Search() {
@@ -28,6 +32,7 @@ export default function Search() {
     Item: string;
     Price: string;
   }>(null);
+  const { lists, addItem } = useList();
 
   // interfaces and constants
   interface Item {
@@ -51,22 +56,16 @@ export default function Search() {
 
   useEffect(() => {
     //getting count of items in list
-    const storedName = localStorage.getItem("currentList") || " ";
-    const storedList = localStorage.getItem("myLists");
-    const myLists: List[] = storedList !== null ? JSON.parse(storedList) : [];
-
-    const selected = myLists.find((list: List) => list.listName == storedName);
+    const storedName = localStorage.getItem("currentList") || "";
+    const selected = lists.find((list: List) => list.listName == storedName);
     setItemCount(selected ? selected.items.length : 0);
-  }, []);
+  }, [lists]);
 
-  function getItemCount() {
-    const storedName = localStorage.getItem("currentList") || " ";
-    const storedList = localStorage.getItem("myLists");
-    const myLists: List[] = storedList !== null ? JSON.parse(storedList) : [];
-
-    const selected = myLists.find((list: List) => list.listName == storedName);
-    setItemCount(selected ? selected.items.length : 0);
-  }
+  // function getItemCount() {
+  //   const storedName = localStorage.getItem("currentList") || " ";
+  //   const selected = lists.find((list: List) => list.listName == storedName);
+  //   setItemCount(selected ? selected.items.length : 0);
+  // }
 
   // checking quantity in list
 
@@ -234,7 +233,7 @@ export default function Search() {
         <button
           onClick={() => {
             onAddToList();
-            getItemCount();
+            // getItemCount();
           }}
         >
           Add {count} items @ R{totalPrice}

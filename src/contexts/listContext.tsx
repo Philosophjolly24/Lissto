@@ -20,6 +20,9 @@ interface ListContextType {
   lists: List[];
   setLists: React.Dispatch<React.SetStateAction<List[]>>;
   updateList: (updatedList: List) => void;
+  addList: (newList: List) => void;
+  deleteList: (currentListName: string) => void;
+  addItem: (listName: string, itemList: Item) => void;
 }
 
 // constants
@@ -39,7 +42,7 @@ export const ListProvider = ({ children }: { children: ReactNode }) => {
 
   // Sync the lists state with localStorage
   useEffect(() => {
-    if (lists.length > 0) {
+    if (lists.length >= 0) {
       localStorage.setItem("myLists", JSON.stringify(lists));
     }
   }, [lists]);
@@ -50,8 +53,35 @@ export const ListProvider = ({ children }: { children: ReactNode }) => {
     );
   }
 
+  function addList(newList: List) {
+    setLists((prevLists) => [...prevLists, newList]);
+  }
+
+  function deleteList(currentListName: string) {
+    const updatedLists = lists.filter(
+      (list: List) => list.listName !== currentListName
+    );
+
+    setLists(updatedLists);
+  }
+
+  function addItem(listName: string, itemList: Item) {
+    const updatedLists = lists.map((list: List) => {
+      if (list.listName === listName) {
+        return {
+          ...list,
+          items: [...(list.items || []), itemList],
+        };
+      }
+      return list;
+    });
+    setLists(updatedLists);
+  }
+
   return (
-    <ListContext.Provider value={{ lists, setLists, updateList }}>
+    <ListContext.Provider
+      value={{ lists, setLists, updateList, addList, deleteList, addItem }}
+    >
       {children}
     </ListContext.Provider>
   );

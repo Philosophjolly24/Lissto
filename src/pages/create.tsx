@@ -1,33 +1,23 @@
+// Imports
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import EmojiPick from "../components/EmojiPicker";
 import { EmojiClickData } from "emoji-picker-react";
 import HamburgerMenu from "../components/Hamburger";
-
-interface List {
-  listName: string;
-  id: string;
-  description?: string;
-  items: Item[];
-}
-
-interface Item {
-  item: string;
-  quantity: number;
-  price: number;
-}
+import { useList } from "../components/useList";
 
 export default function Create() {
+  // states & hooks
   const [listName, setListName] = useState("");
   const [text, setText] = useState("🛒");
   const [listDescription, setListDescription] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [isOpen, setOpen] = useState(false);
   const navigate = useNavigate();
+  const { lists, addList } = useList();
 
+  // handle events
   function handleClick(listName: string, description: string) {
-    const storedList = localStorage.getItem("myLists");
-    const myLists: List[] = storedList !== null ? JSON.parse(storedList) : [];
     localStorage.setItem("currentList", listName);
     const trimmedName = listName.trim();
     console.log(trimmedName);
@@ -37,7 +27,7 @@ export default function Create() {
       return;
     }
 
-    for (const list of myLists) {
+    for (const list of lists) {
       if (list.listName === trimmedName) {
         setError("A list with that name already exists");
         return;
@@ -46,20 +36,20 @@ export default function Create() {
 
     const newList = {
       listName: trimmedName,
-      id: `list-${myLists.length + 1}`,
+      id: `list-${lists.length + 1}`,
       description: description,
       items: [],
       emoji: text,
     };
 
-    myLists.push(newList);
-    localStorage.setItem("myLists", JSON.stringify(myLists));
+    addList(newList);
     navigate(`/search`);
   }
   const handleEmojiClick = (emojiData: EmojiClickData) => {
     setText(emojiData.emoji);
   };
 
+  // Functional component
   return (
     <div className="overlay">
       <div className="title-hamburger-container">

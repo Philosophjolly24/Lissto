@@ -2,40 +2,38 @@ import { useState } from "react";
 import CheckBox from "../components/Checkbox";
 import { useNavigate } from "react-router-dom";
 import HamburgerMenu from "../components/Hamburger";
+import { useList } from "../components/useList";
+
+interface Item {
+  item: string;
+  quantity: number;
+  price: number;
+  checked?: boolean;
+}
 
 interface List {
   listName: string;
   id: string;
-  description?: string;
-  items: Items[];
-}
-interface Items {
-  item: string;
-  quantity: number;
-  price: number;
+  items: Item[];
+  description: string;
+  emoji: string;
 }
 
 export default function List() {
-  const listData = localStorage.getItem("myLists");
-  const allLists = listData !== null ? JSON.parse(listData) : [];
+  const { lists, setLists } = useList();
   const currentList = localStorage.getItem("currentList");
-  // const ProductData = localStorage.getItem("productData");
-  // const ProductList = ProductData !== null ? JSON.parse(ProductData) : [];
+  const navigate = useNavigate();
 
-  const selectedList = allLists.find(
+  const selectedList = lists.find(
     (list: List) => list.listName === currentList
   );
 
-  const [items, setItems] = useState<Items[]>(
-    () => selectedList?.items.map((item: Items) => item) || []
+  const [items, setItems] = useState<Item[]>(
+    () => selectedList?.items.map((item: Item) => item) || []
   );
 
   const handleQuantityChange = (index: number, value: number) => {
-    const listData = localStorage.getItem("myLists");
-    const allLists: List[] = listData ? JSON.parse(listData) : [];
-
     const currentList = localStorage.getItem("currentList");
-
     const updatedItems = [...items];
     const currentItem = updatedItems[index];
 
@@ -65,16 +63,16 @@ export default function List() {
 
     setItems(updatedItems);
 
-    const updatedLists = allLists.map((list: List) => {
+    const updatedLists = lists.map((list: List) => {
       if (list.listName === currentList) {
         return { ...list, items: updatedItems };
       }
       return list;
     });
 
-    localStorage.setItem("myLists", JSON.stringify(updatedLists));
+    setLists(updatedLists);
   };
-  const navigate = useNavigate();
+
   function handleAddToList() {
     navigate(`/search`);
   }
@@ -91,7 +89,7 @@ export default function List() {
             color={isOpen ? "#fff" : "#05769e"}
             distance="lg"
           />
-          <h1 className="item-title">{selectedList.listName.toUpperCase()}</h1>
+          <h1 className="item-title">{selectedList?.listName.toUpperCase()}</h1>
         </div>
         {isOpen && (
           <nav className={isOpen ? "show-nav" : "show-nav"}>
@@ -119,7 +117,7 @@ export default function List() {
           </nav>
         )}
 
-        {items?.map((item: Items, index: number) => {
+        {items?.map((item: Item, index: number) => {
           return (
             <li key={index} className="list-item-checkbox">
               <CheckBox>
