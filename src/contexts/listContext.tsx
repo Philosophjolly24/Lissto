@@ -23,7 +23,7 @@ interface ListContextType {
   addList: (newList: List) => void;
   deleteList: (currentListName: string) => void;
   addItem: (listName: string, itemList: Item) => void;
-  mergeItems: () => void;
+  mergeDuplicateItems: (items: Item[]) => void;
 }
 
 // constants
@@ -72,22 +72,62 @@ export const ListProvider = ({ children }: { children: ReactNode }) => {
     localStorage.setItem("myLists", JSON.stringify(lists));
   }
 
-  function addItem(listName: string, itemList: Item) {
+  function addItem(listName: string, itemToAdd: Item) {
     const updatedLists = lists.map((list: List) => {
       if (list.listName === listName.trim()) {
-        return {
-          ...list,
-          items: [...list.items, itemList],
-        };
+
+        // Check if item already exists
+        const existingItem = list.items.find(
+          (item) => item.item === itemToAdd.item
+        );
+
+        if (existingItem) {
+          // If it exists, merge quantity and price
+          const updatedItems = list.items.map((item) => {
+            if (item.item === itemToAdd.item) {
+              return {
+                ...item,
+                quantity: item.quantity + itemToAdd.quantity,
+                price: item.price + itemToAdd.price,
+              };
+            }
+            return item;
+          });
+
+          return {
+            ...list,
+            items: updatedItems,
+          };
+        } else {
+          // If it doesn't exist, just add it
+          return {
+            ...list,
+            items: [...list.items, itemToAdd],
+          };
+        }
       }
       return list;
     });
+
     console.log(updatedLists);
     setLists(updatedLists);
   }
 
-  function mergeItems() {}
-  console.log(lists);
+  function mergeDuplicateItems(items: Item[]) {
+    const mergedItems: Record<string, Item> = {};
+
+    items.forEach((item) => {
+      if (mergedItems[item.item]) {
+        mergedItems[item.item].quantity += item.quantity;
+        mergedItems[item.item].price += item.price;
+      } else {
+        mergedItems[item.item] = { ...item };
+      }
+    });
+    console.log(mergedItems);
+    return Object.values(mergedItems);
+  }
+
   return (
     <ListContext.Provider
       value={{
@@ -97,7 +137,7 @@ export const ListProvider = ({ children }: { children: ReactNode }) => {
         addList,
         deleteList,
         addItem,
-        mergeItems,
+        mergeDuplicateItems,
       }}
     >
       {children}

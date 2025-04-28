@@ -56,7 +56,6 @@ export default function Search() {
   useEffect(() => {
     //getting count of items in list
     const storedName = localStorage.getItem("currentList") || "";
-    console.log(storedName);
     const selected = lists.find(
       (list: List) => list.listName == storedName.trim()
     );
@@ -97,7 +96,6 @@ export default function Search() {
   };
   const navigate = useNavigate();
   const [isOpen, setOpen] = useState(false);
-  console.log(itemCount);
   // main component
   return (
     <>
