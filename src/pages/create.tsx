@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import HamburgerMenu from "../components/Hamburger";
 import { useList } from "../components/useList";
 import "emoji-picker-element";
+import { v4 as uuidv4 } from "uuid";
 
 export default function Create() {
   // states & hooks
@@ -37,7 +38,7 @@ export default function Create() {
 
     const newList = {
       listName: trimmedName,
-      id: `list-${lists.length + 1}`,
+      id: uuidv4(),
       description: description,
       items: [],
       emoji: text,
@@ -141,12 +142,12 @@ export default function Create() {
               class="light"
               emoji-version="15.0"
               search-placeholder="Search for emoji"
-              style={{ width: "350px", height: "350px", margin: " 20px auto" }}
+              style={{ width: "100%", height: "300px", margin: " 20px auto" }}
               show-preview="false"
               //@ts-expect-error ignore  below
             ></emoji-picker>
           }
-          <p className="emoji-default">Current emoji is {text}</p>
+          <p className="emoji-default">Current icon is: {text}</p>
           <button
             className="border-primary-btn create-list-btn"
             onClick={() => handleClick(listName, listDescription)}

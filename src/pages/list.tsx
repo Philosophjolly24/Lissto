@@ -20,7 +20,7 @@ interface List {
 }
 
 export default function List() {
-  const { lists, setLists } = useList();
+  const { lists, setLists, getListTotal } = useList();
   const currentList = localStorage.getItem("currentList");
   const navigate = useNavigate();
 
@@ -144,6 +144,13 @@ export default function List() {
           );
         })}
       </ul>
+      <div className="total-section">
+        <h2 className="total-title">List Total: </h2>
+        <h2>
+          R{getListTotal(currentList !== null ? currentList : "")?.toFixed(2)}{" "}
+        </h2>
+      </div>
+
       <div className="empty-space"></div>
       <button
         onClick={handleAddToList}
@@ -153,9 +160,10 @@ export default function List() {
       </button>
     </div>
 
+    // // todo: add total
+    // // todo: group items if there are multiple on the list, maybe this should be implemented on the search page when the user adds it to the list, idk
     // todo: save check state
-    // todo: add total
+    // todo:allow list item deletion
     // todo: check out price and disable quantity input on check
-    //todo: group items if there are multiple on the list, maybe this should be implemented on the search page when the user adds it to the list, idk
   );
 }

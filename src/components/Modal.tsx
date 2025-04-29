@@ -1,20 +1,21 @@
-interface SlideModalProps {
+interface ModalProps {
   isOpen: boolean;
-  onClose: () => void;
+  onClose?: () => void;
   children: React.ReactNode;
+  className: string;
 }
 
-export default function SlideModal({
+export default function Modal({
   isOpen,
   onClose,
   children,
-}: SlideModalProps) {
+  className,
+}: ModalProps) {
   if (!isOpen) return null;
-
   return (
     <>
       <div className="modal-backdrop" onClick={onClose}></div>
-      <div className="slide-modal slide-modal-visible">{children}</div>
+      <div className={className}>{children}</div>
     </>
   );
 }

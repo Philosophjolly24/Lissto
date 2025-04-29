@@ -15,15 +15,25 @@ interface List {
   description: string;
   emoji: string;
 }
+interface ListEdit {
+  listName: string;
+  description: string;
+  emoji?: string;
+}
 
 interface ListContextType {
   lists: List[];
   setLists: React.Dispatch<React.SetStateAction<List[]>>;
+  edit: boolean;
+  setEdit: React.Dispatch<React.SetStateAction<boolean>>;
+  deleteListItem: boolean;
+  setDeleteListItem: React.Dispatch<React.SetStateAction<boolean>>;
   updateList: (updatedList: List) => void;
   addList: (newList: List) => void;
   deleteList: (currentListName: string) => void;
   addItem: (listName: string, itemList: Item) => void;
-  mergeDuplicateItems: (items: Item[]) => void;
+  getListTotal: (listName: string) => number;
+  editList: (editedList: ListEdit, listName: string) => void;
 }
 
 // constants
@@ -38,6 +48,8 @@ function initialList() {
 
 export const ListProvider = ({ children }: { children: ReactNode }) => {
   const [lists, setLists] = useState<List[]>(initialList());
+  const [edit, setEdit] = useState(false);
+  const [deleteListItem, setDeleteListItem] = useState(false);
 
   // Initialize lists from localStorage on mount
   useEffect(() => {
@@ -75,7 +87,6 @@ export const ListProvider = ({ children }: { children: ReactNode }) => {
   function addItem(listName: string, itemToAdd: Item) {
     const updatedLists = lists.map((list: List) => {
       if (list.listName === listName.trim()) {
-
         // Check if item already exists
         const existingItem = list.items.find(
           (item) => item.item === itemToAdd.item
@@ -113,20 +124,44 @@ export const ListProvider = ({ children }: { children: ReactNode }) => {
     setLists(updatedLists);
   }
 
-  function mergeDuplicateItems(items: Item[]) {
-    const mergedItems: Record<string, Item> = {};
-
-    items.forEach((item) => {
-      if (mergedItems[item.item]) {
-        mergedItems[item.item].quantity += item.quantity;
-        mergedItems[item.item].price += item.price;
-      } else {
-        mergedItems[item.item] = { ...item };
+  function getListTotal(currentListName: string) {
+    let total = 0;
+    for (const list of lists) {
+      if (list.listName === currentListName.trim()) {
+        for (const item of list.items) {
+          total += item.price;
+        }
       }
-    });
-    console.log(mergedItems);
-    return Object.values(mergedItems);
+    }
+    return total;
   }
+  function editList(editedList: ListEdit, currentListName: string) {
+    // field validation
+    if (editedList.listName.trim() === "") {
+      console.error("Fields may not be empty");
+      return;
+    }
+    for (const list of lists) {
+      if (
+        list.listName == editedList.listName &&
+        list.listName !== currentListName
+      ) {
+        console.error("a list with that name already exists");
+        return;
+      }
+    }
+    // field replacement
+    const updatedList = lists.map((list: List) => {
+      if (list.listName === currentListName.trim()) {
+        list.listName = editedList.listName;
+        list.description = editedList.description;
+      }
+      return list;
+    });
+    console.log(updatedList);
+    setLists(updatedList);
+  }
+  // console.log(getListTotal("test list#1") ? getListTotal("test list#1") : "");
 
   return (
     <ListContext.Provider
@@ -137,7 +172,12 @@ export const ListProvider = ({ children }: { children: ReactNode }) => {
         addList,
         deleteList,
         addItem,
-        mergeDuplicateItems,
+        getListTotal,
+        edit,
+        setEdit,
+        editList,
+        deleteListItem,
+        setDeleteListItem,
       }}
     >
       {children}

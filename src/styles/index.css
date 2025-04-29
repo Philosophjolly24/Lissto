@@ -11,6 +11,8 @@
 @import url('checkbox.css');
 @import url('viewList.css');
 @import url('emojiPicker.css');
+@import url('edit.css');
+@import url('dialogueBox.css');
 
 #root {
   --primary-color: #05769e;

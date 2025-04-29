@@ -92,3 +92,18 @@
     .empty-space {
         height: 100px;
     }
+
+    .total-section {
+        margin-top: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        color: var(--primary-color);
+        gap: 10px;
+
+
+        >h2 {
+            font-size: 32px;
+            font-weight: 800;
+        }
+    }

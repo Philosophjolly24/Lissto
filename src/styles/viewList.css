@@ -33,7 +33,7 @@
 
 
 .list-product {
-    margin: 15px;
+    margin: 15px 0;
     font-size: 20px;
     width: 100%;
 }
@@ -41,9 +41,6 @@
 
 
 .price-quantity-container {
-    /* display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px; */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -89,5 +86,5 @@
 
     font-size: 36px;
     color: var(--primary-color);
-    font-weight: 800;
+    font-weight: 900;
 }

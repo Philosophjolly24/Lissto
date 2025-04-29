@@ -5,12 +5,61 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useList } from "../components/useList";
 
+
 export default function Home() {
   const [isOpen, setOpen] = useState(false);
+
   const { lists } = useList();
   const navigate = useNavigate();
   return (
     <>
+      {/* {edit ? (
+        <>
+          <SlideModal
+            className={"slide-modal slide-modal-visible edit-modal"}
+            isOpen={edit}
+            onClose={() => setEdit(false)}
+          >
+            <div className="edit-container">
+              <div className="close">
+                <h2 className="edit-text">Update Name</h2>
+                <img
+                  className="close"
+                  onClick={() => setEdit(false)}
+                  src="/src/assets/close-blue.svg"
+                  alt=""
+                />
+              </div>
+              <input className="edit-list-name" type="text" name="" id="" />
+              <div className="scroll-container">
+                <h2 className="edit-text">Update Description</h2>
+                <textarea className="edit-list-description" name="" id="" />
+                <h2 className="edit-text">Add an Icon:</h2>
+                {
+                  // @ts-expect-error ignore below
+                  <emoji-picker
+                    class="light"
+                    emoji-version="15.0"
+                    search-placeholder="Search for emoji"
+                    style={{
+                      width: "100%",
+                      height: "250px",
+                      margin: " 10px 0  20px 0",
+                    }}
+                    show-preview="false"
+                    //@ts-expect-error ignore  below
+                  ></emoji-picker>
+                }
+                <button className="border-primary-btn create-list-btn">
+                  save changes
+                </button>
+              </div>
+            </div>
+          </SlideModal>
+        </>
+      ) : (
+        ""
+      )} */}
       <div className="title-hamburger-container">
         <HamburgerMenu
           toggled={isOpen}

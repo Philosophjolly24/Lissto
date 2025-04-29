@@ -1,7 +1,7 @@
 // imports
 import { useState, useEffect, useRef } from "react";
 import CustomSelect from "../components/dropbox";
-import SlideModal from "../components/SlideModal";
+import Modal from "../components/Modal";
 import { useNavigate } from "react-router-dom";
 import HamburgerMenu from "../components/Hamburger";
 import { useList } from "../components/useList";
@@ -62,12 +62,6 @@ export default function Search() {
     setItemCount(selected ? selected.items.length : 0);
   }, [lists]);
 
-  // function getItemCount() {
-  //   const storedName = localStorage.getItem("currentList") || " ";
-  //   const selected = lists.find((list: List) => list.listName == storedName);
-  //   setItemCount(selected ? selected.items.length : 0);
-  // }
-
   // checking quantity in list
 
   // creating item filter for searching
@@ -99,7 +93,6 @@ export default function Search() {
   // main component
   return (
     <>
-      {/* view cart button */}
       {/*Note: react can't run if statements in jsx, so use conditional loops*/}
       {itemCount > 0 && (
         <button
@@ -181,8 +174,9 @@ export default function Search() {
           </li>
         ))}
       </ul>
-      <SlideModal
+      <Modal
         isOpen={!!selectedProduct}
+        className="slide-modal slide-modal-visible"
         onClose={() => {
           setSelectedProduct(null);
           setCount(1);
@@ -233,12 +227,11 @@ export default function Search() {
         <button
           onClick={() => {
             onAddToList();
-            // getItemCount();
           }}
         >
           Add {count} items @ R{totalPrice}
         </button>
-      </SlideModal>
+      </Modal>
     </>
     // todo: add more items to the giant excel list
   );
