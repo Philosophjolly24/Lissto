@@ -19,19 +19,9 @@
         row-gap: 30px;
         column-gap: 15px;
         width: 100%;
+        max-width: 800px;
 
     }
-
-    /* .list-name {
-        text-decoration: none;
-        margin: 0 20px;
-        width: 100%;
-        text-align: center;
-        color: #000000;
-        font-weight: 600;
-    } */
-
-
 
     .list-title {
         letter-spacing: 0.09em;
@@ -90,7 +80,7 @@
     }
 
     .empty-space {
-        height: 100px;
+        height: 200px;
     }
 
     .total-section {
@@ -106,4 +96,10 @@
             font-size: 32px;
             font-weight: 800;
         }
+    }
+
+    .swipeable-list-item__content {
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }

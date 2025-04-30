@@ -158,7 +158,6 @@ export const ListProvider = ({ children }: { children: ReactNode }) => {
       }
       return list;
     });
-    console.log(updatedList);
     setLists(updatedList);
   }
   // console.log(getListTotal("test list#1") ? getListTotal("test list#1") : "");

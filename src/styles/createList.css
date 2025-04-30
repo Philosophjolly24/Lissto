@@ -49,6 +49,8 @@
     background-color: var(--primary-color);
     display: block;
     width: 100%;
+    /* max-width: 800px; */
+    margin: auto;
     font-size: 18px;
     font-weight: 600;
     height: 40px;

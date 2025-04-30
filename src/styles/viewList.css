@@ -74,12 +74,13 @@
 .add-product {
     position: fixed;
     bottom: 20px;
-    ;
-    margin-top: auto;
+    margin: 0 auto;
+    /* margin-top: auto; */
     width: 85vw;
     height: 60px !important;
     font-weight: 700;
     font-size: 22px;
+    /* max-width: 800px !important; */
 }
 
 .list-heading {

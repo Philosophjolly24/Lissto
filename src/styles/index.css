@@ -13,11 +13,15 @@
 @import url('emojiPicker.css');
 @import url('edit.css');
 @import url('dialogueBox.css');
+@import url('contextMenu.css');
 
 #root {
   --primary-color: #05769e;
   --light-text: #666;
   --subheading-spacing: 0.07em;
+}
+li{
+  list-style: none;
 }
 
 .hamburger-react {
@@ -53,4 +57,92 @@
 
 .visible {
   display: block;
+}
+
+@media(min-width:768px) {
+  main {
+    max-width: 1000px !important;
+  }
+
+  .item-title {
+    font-size: 40px;
+  }
+
+  .home-sub-heading {
+    font-size: 32px;
+    margin-bottom: 25px;
+  }
+
+  .create-new-list {
+    height: 8px;
+    bottom: 10px;
+    left: 6%;
+    min-width: 700px;
+    max-width: 1000px;
+  }
+
+  .list-name {
+    font-size: 35px !important;
+  }
+
+  .description {
+    font-size: 20px;
+  }
+
+  .cheveron {
+    width: 32px;
+    height: 32px;
+  }
+
+  .home-container {
+    max-width: 1200px;
+    max-height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+@media (min-width : 1024px) {
+
+  .empty-space {
+    min-height: 100px !important;
+  }
+
+  .list-item {
+    min-width: 1000px !important;
+    max-width: 100% !important;
+
+  }
+
+  .item-title {
+    font-size: 50px !important;
+  }
+
+  .home-sub-heading {
+    font-size: 32px;
+    margin-bottom: 25px;
+  }
+
+  .create-new-list {
+    height: 8px;
+    bottom: 10px;
+    left: 50% !important;
+    min-width: 1000px !important;
+    max-width: 140px !important;
+    transform: translateX(-490px);
+    font-size: 36px;
+  }
+
+  .list-name {
+    font-size: 42px !important;
+  }
+
+  .description {
+    font-size: 28px;
+  }
+
+  .cheveron {
+    width: 32px;
+    height: 32px;
+  }
 }

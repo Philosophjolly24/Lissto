@@ -1,4 +1,21 @@
 main {
     height: 100svh !important;
     width: 100%;
+    max-width: 1000px;
+}
+
+@media(min-width:768px) {
+    main {
+        height: 100svh !important;
+        width: 100%;
+        max-width: 1000px;
+    }
+}
+
+@media(min-width:1024px) {
+    main {
+        height: 100svh !important;
+        width: 100%;
+        max-width: 1300px !important;
+    }
 }

@@ -1,17 +1,10 @@
 // imports
 import { Link } from "react-router-dom";
-import { FiEdit2, FiTrash2 } from "react-icons/fi";
-import {
-  SwipeableList,
-  SwipeableListItem,
-  SwipeAction,
-  TrailingActions,
-  Type,
-} from "react-swipeable-list";
-import "react-swipeable-list/dist/styles.css";
+// import { FiEdit2, FiTrash2 } from "react-icons/fi";
 import { useList } from "./useList";
 import Modal from "./Modal";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import ContextMenu from "./ContextMenu";
 import DialogueBox from "./DialogueBox";
 
 // interfaces
@@ -30,15 +23,25 @@ interface List {
   emoji: string;
 }
 
+interface ContextMenuState {
+  position: { x: number; y: number };
+  toggled: boolean;
+}
+
 // All lists component
 export default function Lists() {
   // importing list context
-  const { lists, deleteListItem, setDeleteListItem, setEdit, edit, editList } =
+  const { lists, setEdit, deleteListItem, edit, setDeleteListItem, editList } =
     useList();
   // states
   const [title, setTitle] = useState<string>("w");
   const [description, setDescription] = useState<string>("d");
   const [currentListName, setCurrentListName] = useState<string>("d");
+  const [contextMenuObject, setContextMenuObject] = useState<ContextMenuState>({
+    position: { x: 0, y: 0 },
+    toggled: false,
+  });
+  const contextMenuRef = useRef<HTMLMenuElement | null>(null);
 
   useEffect(() => {
     const stored = localStorage.getItem("currentList");
@@ -53,38 +56,99 @@ export default function Lists() {
   function getCurrentListInfo() {
     const stored = localStorage.getItem("currentList");
     setCurrentListName(!stored ? "" : stored);
-    const currentList = lists.find((list) => list.listName === currentListName);
+    const currentList = lists.find(
+      (list) => list.listName === currentListName.trim()
+    );
     if (currentList) {
       setTitle(currentList.listName);
       setDescription(currentList.description);
     }
+    console.log(title);
+    console.log(description);
   }
-  // swipe button action logic
-  const trailingActions = () => (
-    <TrailingActions>
-      <SwipeAction onClick={() => setEdit(true)} Tag="div">
-        <div className="swipe-button edit-button">
-          <FiEdit2 size={20} />
-        </div>
-      </SwipeAction>
-      <SwipeAction
-        destructive={false}
-        onClick={() => {
-          // show delete modal
-          setDeleteListItem(true);
-        }}
-      >
-        <div className="swipe-button delete-button">
-          <FiTrash2 className=" icon-swipe" size={20} />
-        </div>
-      </SwipeAction>
-    </TrailingActions>
-  );
+
+  function handleOnContextMenu(
+    e: React.MouseEvent<HTMLAnchorElement, MouseEvent>
+  ) {
+    e.preventDefault();
+    const contextMenuAttr = contextMenuRef?.current
+      ? contextMenuRef.current.getBoundingClientRect()
+      : null;
+    console.log(contextMenuAttr);
+
+    const isLeft = e.clientX < window?.innerWidth;
+
+    if (!contextMenuAttr) return;
+
+    let x;
+    const y = e.pageY;
+
+    if (isLeft) {
+      x = e.pageX;
+    } else {
+      x = e.pageX - contextMenuAttr.width;
+    }
+
+    setContextMenuObject({ position: { x, y }, toggled: true });
+  }
+  useEffect(() => {
+    function handler(e: MouseEvent) {
+      if (
+        contextMenuRef.current &&
+        !contextMenuRef.current.contains(e.target as Node)
+      ) {
+        setContextMenuObject({ position: { x: 0, y: 0 }, toggled: false });
+      }
+    }
+
+    document.addEventListener("click", handler);
+
+    // Cleanup the event listener
+    return () => {
+      document.removeEventListener("click", handler);
+    };
+  }, []);
 
   // Main component
   return (
     <>
+      {" "}
       {deleteListItem ? <DialogueBox></DialogueBox> : ""}
+      <ContextMenu
+        contextMenuRef={contextMenuRef}
+        isToggled={contextMenuObject.toggled}
+        positionX={contextMenuObject.position.x}
+        positionY={contextMenuObject.position.y}
+        buttons={[
+          {
+            text: "Update List",
+            onClick: () => {
+              setEdit(true);
+              setContextMenuObject({
+                position: { x: 0, y: 0 },
+                toggled: false,
+              });
+            },
+            isSpacer: false,
+          },
+          {
+            text: "",
+            onClick: () => {},
+            isSpacer: true,
+          },
+          {
+            text: "Remove List",
+            onClick: () => {
+              setContextMenuObject({
+                position: { x: 0, y: 0 },
+                toggled: false,
+              });
+              setDeleteListItem(true);
+            },
+            isSpacer: false,
+          },
+        ]}
+      ></ContextMenu>
       {edit ? (
         <>
           <Modal
@@ -149,47 +213,40 @@ export default function Lists() {
       <ul className="list-container">
         {lists.map((list: List) => {
           return (
-            <SwipeableList fullSwipe={false} type={Type.IOS} key={list.id}>
-              <SwipeableListItem
-                trailingActions={trailingActions()}
-                onSwipeStart={() => {
-                  localStorage.setItem("currentList", list.listName);
-                  getCurrentListInfo();
-                }}
-                maxSwipe={0.4}
-              >
-                <Link
-                  className="list-item"
-                  to="/list"
-                  onClick={() => {
-                    localStorage.setItem("currentList", list.listName);
-                  }}
-                >
-                  <div className="emoji">{list.emoji}</div>
-                  <div className="list-name-description-section">
-                    <h2 className="list-name">
-                      {list.listName.slice(0, 1).toUpperCase() +
-                        list.listName.slice(1)}
-                    </h2>
-                    <p className="description">
-                      {list.description.trim() == ""
-                        ? ""
-                        : list.description.length >= 35
-                        ? list.description.slice(0, 1).toUpperCase() +
-                          list.description.slice(1, 35) +
-                          "..."
-                        : list.description.slice(0, 1).toUpperCase() +
-                          list.description.slice(1)}
-                    </p>
-                  </div>
-
-                  <img
-                    className="cheveron"
-                    src="/src/assets/cheveron-right.svg"
-                  />
-                </Link>
-              </SwipeableListItem>
-            </SwipeableList>
+            // <li>
+            <Link
+              className="list-item"
+              to="/list"
+              onClick={() => {
+                localStorage.setItem("currentList", list.listName);
+              }}
+              onContextMenu={(e) => {
+                localStorage.setItem("currentList", list.listName);
+                setCurrentListName(list.listName);
+                getCurrentListInfo();
+                handleOnContextMenu(e);
+              }}
+            >
+              <div className="emoji">{list.emoji}</div>
+              <div className="list-name-description-section">
+                <h2 className="list-name">
+                  {list.listName.slice(0, 1).toUpperCase() +
+                    list.listName.slice(1)}
+                </h2>
+                <p className="description">
+                  {list.description.trim() == ""
+                    ? ""
+                    : list.description.length >= 35
+                    ? list.description.slice(0, 1).toUpperCase() +
+                      list.description.slice(1, 35) +
+                      "..."
+                    : list.description.slice(0, 1).toUpperCase() +
+                      list.description.slice(1)}
+                </p>
+              </div>
+              <img className="cheveron" src="/src/assets/cheveron-right.svg" />
+            </Link>
+            // </li>
           );
         })}
       </ul>
