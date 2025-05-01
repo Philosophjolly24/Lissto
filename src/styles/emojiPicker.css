@@ -39,3 +39,24 @@ emoji-picker {
 
     --emoji-font-family: 'nunito'
 }
+
+@media(min-width:1024px) {
+    emoji-picker {
+        --num-columns: 8;
+        --emoji-size: 2rem;
+        --background: #ffffff;
+        --border-radius: 10px;
+        /* --border-color: #05769e; */
+        --border-size: 2px;
+        --category-emoji-size: 0;
+        --category-font-size: 0;
+        --category-font-color: transparent;
+        --recommendation-emoji-size: 0;
+        --recommendation-font-size:
+    }
+
+    .emoji-default {
+        font-size: 28px;
+        margin: 10px;
+    }
+}

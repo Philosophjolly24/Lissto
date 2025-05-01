@@ -20,7 +20,8 @@
   --light-text: #666;
   --subheading-spacing: 0.07em;
 }
-li{
+
+li {
   list-style: none;
 }
 
@@ -73,7 +74,7 @@ li{
     margin-bottom: 25px;
   }
 
-  .create-new-list {
+  .fixed-button {
     height: 8px;
     bottom: 10px;
     left: 6%;
@@ -119,11 +120,11 @@ li{
   }
 
   .home-sub-heading {
-    font-size: 32px;
+    font-size: 28px;
     margin-bottom: 25px;
   }
 
-  .create-new-list {
+  .fixed-button {
     height: 8px;
     bottom: 10px;
     left: 50% !important;
@@ -134,11 +135,11 @@ li{
   }
 
   .list-name {
-    font-size: 42px !important;
+    font-size: 36px !important;
   }
 
   .description {
-    font-size: 28px;
+    font-size: 24 px;
   }
 
   .cheveron {

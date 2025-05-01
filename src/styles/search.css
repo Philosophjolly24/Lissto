@@ -146,3 +146,43 @@
     background-color: #ffffff !important;
     border: none !important;
 }
+
+@media (min-width:1024px) {
+    .product-list {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+    }
+
+    .product {
+        margin: 10px 0;
+        column-gap: 30px !important;
+
+        >.title {
+            font-size: 22px;
+            font-weight: 600;
+        }
+
+        >.container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            >.price {
+                font-size: 22px;
+                color: var(--light-text);
+            }
+        }
+    }
+
+    #search-field {
+        font-size: 24px;
+
+        &:focus {
+            border: 2px solid var(--primary-color);
+            outline: none;
+        }
+
+    }
+}

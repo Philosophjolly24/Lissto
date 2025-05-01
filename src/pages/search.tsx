@@ -96,7 +96,7 @@ export default function Search() {
       {/*Note: react can't run if statements in jsx, so use conditional loops*/}
       {itemCount > 0 && (
         <button
-          className="view-items"
+          className="fixed-button"
           onClick={() => {
             // handle showing cart modal or navigating to cart page
             navigate(`/list`);

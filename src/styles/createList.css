@@ -113,3 +113,104 @@
         color: var(--primary-color);
     }
 }
+
+@media (min-width:1024px) {
+
+    .overlay {
+        .modal-window {
+            .create-list-container {
+                h3 {
+                    font-size: 32px;
+                }
+
+                .input-field {
+                    font-size: 24px;
+
+                    &:focus {
+                        outline: none;
+                        border: 2px solid var(--primary-color);
+                    }
+                }
+            }
+        }
+    }
+
+    .border-primary-btn {
+        color: #ffffff;
+        background-color: var(--primary-color);
+        display: block;
+        width: 100%;
+        /* max-width: 800px; */
+        margin: auto;
+        font-size: 18px;
+        font-weight: 600;
+        height: 40px;
+        padding: 8px 0;
+        text-align: center;
+        justify-content: center;
+        border-radius: 20px;
+        border: none;
+    }
+
+    .description-field {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 100%;
+        max-width: 100%;
+        min-height: 120px;
+        field-sizing: content;
+        border-radius: 10px;
+        font-size: 20px;
+        outline: none;
+        border: none;
+        color: #101720;
+        border: 2px solid var(--primary-color);
+        margin-bottom: 30px;
+        /* text-align: center; */
+    }
+
+    .error {
+        color: #de3d32;
+        width: 100%;
+        text-align: center;
+        font-size: 18px;
+    }
+
+    .create-list-btn {
+        height: 60px;
+        border-radius: 25px !important;
+        margin-bottom: 30px;
+        font-size: 24px !important;
+        font-weight: 700;
+    }
+
+    .title-hamburger-container {
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        gap: 20px;
+
+        .item-title {
+            position: relative;
+            width: 100%;
+            margin-left: 30px;
+            /* display: flex;
+            align-items: center; */
+            text-align: center;
+            font-weight: 900;
+            font-size: 32px;
+            font-style: italic;
+            color: var(--primary-color);
+        }
+    }
+
+    .description-field {
+        min-width: 100%;
+        max-width: 100%;
+        min-height: 200px;
+        field-sizing: content;
+        font-size: 24px;
+    }
+
+}

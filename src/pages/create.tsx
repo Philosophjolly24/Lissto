@@ -147,7 +147,7 @@ export default function Create() {
               //@ts-expect-error ignore  below
             ></emoji-picker>
           }
-          <p className="emoji-default">Current icon is: {text}</p>
+          <p className="emoji-default">Your list icon is: {text}</p>
           <button
             className="border-primary-btn create-list-btn"
             onClick={() => handleClick(listName, listDescription)}

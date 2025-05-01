@@ -89,3 +89,28 @@
     color: var(--primary-color);
     font-weight: 900;
 }
+
+@media (min-width:1024px) {
+    .list-product {
+        margin: 15px 0;
+        font-size: 24px;
+        width: 100%;
+    }
+
+    .price-quantity-container {
+
+        .item-product-price {
+            font-size: 24px;
+
+        }
+
+        .item-product-quantity {
+            font-size: 24px;
+
+
+            &:focus {
+                outline-color: var(--primary-color);
+            }
+        }
+    }
+}

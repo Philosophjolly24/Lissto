@@ -41,7 +41,7 @@
 
 }
 
-.create-new-list {
+.fixed-button {
     bottom: 10px;
     position: fixed;
     display: flex;
@@ -52,7 +52,8 @@
     display: block;
     width: 90%;
     max-width: 700px;
-    left: 5%; font-size: 24px;
+    left: 5%;
+    font-size: 24px;
     font-weight: 600;
     height: 40px;
     padding: 8px 0;

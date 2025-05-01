@@ -211,10 +211,11 @@ export default function Lists() {
         ""
       )}
       <ul className="list-container">
-        {lists.map((list: List) => {
+        {lists.map((list: List, i: number) => {
           return (
             // <li>
             <Link
+              key={i}
               className="list-item"
               to="/list"
               onClick={() => {

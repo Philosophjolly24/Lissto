@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useList } from "../components/useList";
 
-
 export default function Home() {
   const [isOpen, setOpen] = useState(false);
 
@@ -59,7 +58,7 @@ export default function Home() {
         <Lists></Lists>
         <button
           onClick={() => navigate("/create-list")}
-          className="create-new-list"
+          className="fixed-button"
         >
           + Create a list
         </button>

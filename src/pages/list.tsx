@@ -154,7 +154,7 @@ export default function List() {
       <div className="empty-space"></div>
       <button
         onClick={handleAddToList}
-        className="border-primary-btn add-product"
+        className="fixed-button"
       >
         Forgot Something?
       </button>
