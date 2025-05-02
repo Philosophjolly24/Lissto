@@ -1,11 +1,11 @@
 // imports
 import { Link } from "react-router-dom";
-// import { FiEdit2, FiTrash2 } from "react-icons/fi";
 import { useList } from "./useList";
 import Modal from "./Modal";
 import { useEffect, useRef, useState } from "react";
 import ContextMenu from "./ContextMenu";
 import DialogueBox from "./DialogueBox";
+// ===========================================================//
 
 // interfaces
 interface Item {
@@ -27,12 +27,20 @@ interface ContextMenuState {
   position: { x: number; y: number };
   toggled: boolean;
 }
+// ===========================================================//
 
-// All lists component
+// main component
 export default function Lists() {
   // importing list context
-  const { lists, setEdit, deleteListItem, edit, setDeleteListItem, editList } =
-    useList();
+  const {
+    lists,
+    setEdit,
+    deleteListItem,
+    edit,
+    setDeleteListItem,
+    editList,
+    deleteList,
+  } = useList();
   // states
   const [title, setTitle] = useState<string>("w");
   const [description, setDescription] = useState<string>("d");
@@ -76,7 +84,7 @@ export default function Lists() {
       : null;
     console.log(contextMenuAttr);
 
-    const isLeft = e.clientX < window?.innerWidth;
+    const isLeft = e.pageX < window?.innerWidth / 2;
 
     if (!contextMenuAttr) return;
 
@@ -86,11 +94,12 @@ export default function Lists() {
     if (isLeft) {
       x = e.pageX;
     } else {
-      x = e.pageX - contextMenuAttr.width;
+      x = e.pageX - contextMenuAttr.width / 3;
     }
 
     setContextMenuObject({ position: { x, y }, toggled: true });
   }
+
   useEffect(() => {
     function handler(e: MouseEvent) {
       if (
@@ -113,7 +122,14 @@ export default function Lists() {
   return (
     <>
       {" "}
-      {deleteListItem ? <DialogueBox></DialogueBox> : ""}
+      {deleteListItem ? (
+        <DialogueBox
+          dialogueMessage="This can’t be undone. Delete the list?"
+          onDelete={() => deleteList(currentListName)}
+        ></DialogueBox>
+      ) : (
+        ""
+      )}
       <ContextMenu
         contextMenuRef={contextMenuRef}
         isToggled={contextMenuObject.toggled}

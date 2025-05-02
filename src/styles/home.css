@@ -63,6 +63,7 @@
     border: none;
     height: 60px !important;
     height: 8px;
+    z-index: 10 !important;
 }
 
 /* Specific colors for different actions */

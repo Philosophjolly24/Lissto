@@ -1,21 +1,29 @@
 import Modal from "./Modal";
 import { useList } from "./useList";
+interface dialogueBoxProps {
+  dialogueMessage: string;
+  onDelete: () => void;
+}
 
-export default function DialogueBox() {
-  const { deleteListItem, setDeleteListItem, deleteList } = useList();
-  const stored = localStorage.getItem("currentList");
-  const currentList = stored ? stored : "";
+export default function DialogueBox({
+  dialogueMessage,
+  onDelete,
+}: dialogueBoxProps) {
+  const { deleteListItem, setDeleteListItem } = useList();
+  // const stored = localStorage.getItem("currentList");
+  // const currentList = stored ? stored : "";
   return (
     <Modal className="dialogue-box" isOpen={deleteListItem}>
       <div>
-        <p className="dialogue-message">
-          This can’t be undone. Delete the list?
-        </p>
+        <p className="dialogue-message">{dialogueMessage}</p>
         <div className="button-container">
           <button
             className="dialogue-button"
             onClick={() => {
-              deleteList(currentList);
+              {
+                onDelete();
+              }
+              //  { deleteList(currentList);}
               setDeleteListItem(false);
             }}
           >

@@ -41,6 +41,10 @@ li {
 
 }
 
+.empty-space {
+  min-height: 100px !important;
+}
+
 #root {
   /* height: calc(100vh - 38.6px); */
   height: 100svh;
@@ -61,6 +65,10 @@ li {
 }
 
 @media(min-width:768px) {
+  .empty-space {
+    min-height: 100px !important;
+  }
+
   main {
     max-width: 1000px !important;
   }
@@ -75,6 +83,7 @@ li {
   }
 
   .fixed-button {
+    position: fixed;
     height: 8px;
     bottom: 10px;
     left: 6%;
