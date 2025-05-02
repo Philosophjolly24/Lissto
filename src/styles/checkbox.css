@@ -28,7 +28,7 @@
 }
 
 /* Checkmark tick */
-.custom-checkbox input:checked+.checkmark::after {
+.custom-checkbox input:checked~.checkmark::after {
     content: "";
     position: absolute;
     width: 6px;
@@ -39,7 +39,7 @@
     bottom: 6px;
 }
 
-.custom-checkbox input:checked ~ .checkbox-label {
+.custom-checkbox input:checked~.checkbox-label {
     text-decoration: line-through;
     color: var(--light-text);
 

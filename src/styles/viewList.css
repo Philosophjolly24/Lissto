@@ -114,3 +114,8 @@
         }
     }
 }
+
+.checked {
+    color: var(--light-text) !important;
+    text-decoration: line-through;
+}

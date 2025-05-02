@@ -23,13 +23,16 @@ export default function List() {
   const { lists, setLists, getListTotal } = useList();
   const currentList = localStorage.getItem("currentList");
   const navigate = useNavigate();
-
   const selectedList = lists.find(
     (list: List) => list.listName === currentList
   );
 
   const [items, setItems] = useState<Item[]>(
-    () => selectedList?.items.map((item: Item) => item) || []
+    () =>
+      selectedList?.items.map((item: Item) => ({
+        ...item,
+        checked: item.checked ?? false,
+      })) || []
   );
 
   const handleQuantityChange = (index: number, value: number) => {
@@ -78,6 +81,26 @@ export default function List() {
   }
   const [isOpen, setOpen] = useState(false);
 
+  function handleItemCheck(index: number) {
+    const updatedItems = items.map((item: Item, i: number) => {
+      if (i === index) {
+        return { ...item, checked: !item.checked };
+      }
+      return item;
+    });
+    console.log(updatedItems);
+    setItems(updatedItems);
+
+    const updatedLists = lists.map((list: List) => {
+      if (list.listName == selectedList?.listName) {
+        return { ...list, items: updatedItems };
+      }
+      return list;
+    });
+
+    setLists(updatedLists);
+  }
+
   return (
     <div className="list-item-product-container">
       <ul className="list-product-container">
@@ -119,11 +142,31 @@ export default function List() {
 
         {items?.map((item: Item, index: number) => {
           return (
-            <li key={index} className="list-item-checkbox">
-              <CheckBox>
+            <li
+              key={index}
+              className={`list-item-checkbox ${
+                item.checked ? "checked" : false
+              }`}
+              onClick={() => {
+                // e.preventDefault();
+              }}
+            >
+              <CheckBox
+                onClick={(e) => {
+                  handleItemCheck(index);
+                  e.stopPropagation();
+                }}
+                checked={item.checked ? item.checked : false}
+              >
                 <p className="list-product">{item.item}</p>
               </CheckBox>
-              <div className="price-quantity-container">
+              <div
+                className={`${
+                  !item.checked
+                    ? `price-quantity-container`
+                    : `price-quantity-container checked`
+                }`}
+              >
                 <input
                   className="item-product-quantity"
                   type="text"
@@ -152,10 +195,7 @@ export default function List() {
       </div>
 
       <div className="empty-space"></div>
-      <button
-        onClick={handleAddToList}
-        className="fixed-button"
-      >
+      <button onClick={handleAddToList} className="fixed-button">
         Forgot Something?
       </button>
     </div>
@@ -165,5 +205,6 @@ export default function List() {
     // todo: save check state
     // todo:allow list item deletion
     // todo: check out price and disable quantity input on check
+    // todo: create dowload list image
   );
 }
