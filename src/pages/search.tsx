@@ -124,9 +124,6 @@ export default function Search() {
                 <li className="navbar-item" onClick={() => navigate("/")}>
                   Home
                 </li>
-                <li className="navbar-item" onClick={() => navigate("/search")}>
-                  Search
-                </li>
                 <li
                   className="navbar-item"
                   onClick={() => navigate("/create-list")}

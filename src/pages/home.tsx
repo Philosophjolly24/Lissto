@@ -35,13 +35,6 @@ export default function Home() {
                   <li className="navbar-item">
                     <a onClick={() => navigate("/")}>Home</a>
                   </li>
-
-                  <li className="navbar-item">
-                    <a className="nav-link" onClick={() => navigate("/search")}>
-                      Search
-                    </a>
-                  </li>
-
                   <li className="navbar-item">
                     <a
                       className="nav-link"

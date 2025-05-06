@@ -247,12 +247,6 @@ export default function List() {
                     </li>
                     <li
                       className="navbar-item"
-                      onClick={() => navigate("/search")}
-                    >
-                      Search
-                    </li>
-                    <li
-                      className="navbar-item"
                       onClick={() => navigate("/create-list")}
                     >
                       Create List
@@ -269,21 +263,6 @@ export default function List() {
             positionX={contextMenuObject.position.x}
             positionY={contextMenuObject.position.y}
             buttons={[
-              {
-                text: "Create Item",
-                onClick: () => {
-                  setContextMenuObject({
-                    position: { x: 0, y: 0 },
-                    toggled: false,
-                  });
-                },
-                isSpacer: false,
-              },
-              {
-                text: "",
-                onClick: () => {},
-                isSpacer: true,
-              },
               {
                 text: "Remove Item",
                 onClick: () => {
