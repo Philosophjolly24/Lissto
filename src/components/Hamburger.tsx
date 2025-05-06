@@ -6,13 +6,28 @@ interface HamburgerMenuProp {
   toggle?: Dispatch<SetStateAction<boolean>>;
   size?: number;
   direction?: "left" | "right" | undefined;
-  distance?: "sm" | "md" | "lg" | undefined
+  distance?: "sm" | "md" | "lg" | undefined;
   color?: string;
   easing?: string;
   onToggle?: () => void;
   rounded?: boolean;
   hideOutline?: boolean;
 }
+
+/**
+ * custom Hamburger menu
+ *
+ * @export
+ * @param {HamburgerMenuProp} {
+ *   toggle,
+ *   toggled,
+ *   size,
+ *   color,
+ *   rounded,
+ *   direction,
+ *   distance,
+ * }
+ */
 export default function HamburgerMenu({
   toggle,
   toggled,

@@ -45,7 +45,6 @@ nav {
 .hide-nav {
     transition: all 0.5s ease 0s;
     transform: translateY(-200px);
-
 }
 
 .show-nav {

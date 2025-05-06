@@ -4,7 +4,16 @@ interface ModalProps {
   children: React.ReactNode;
   className: string;
 }
-
+/**
+ * Slide Component
+ *
+ * @param {ModalProps} {
+ *   isOpen,
+ *   onClose,
+ *   children,
+ *   className,
+ * }
+ */
 export default function Modal({
   isOpen,
   onClose,

@@ -6,6 +6,7 @@ import HamburgerMenu from "../components/Hamburger";
 import { useList } from "../components/useList";
 import ContextMenu from "../components/ContextMenu";
 import DialogueBox from "../components/DialogueBox";
+import Modal from "../components/Modal";
 // =============================================================//
 
 // interfaces
@@ -15,7 +16,6 @@ interface Item {
   price: number;
   checked?: boolean;
 }
-
 interface List {
   listName: string;
   id: string;
@@ -23,38 +23,41 @@ interface List {
   description: string;
   emoji: string;
 }
-
 interface ContextMenuState {
   position: { x: number; y: number };
   toggled: boolean;
 }
 // =============================================================//
 
-// Main component
 export default function List() {
-  // hooks and states
+  // Hooks and states
   const currentList = localStorage.getItem("currentList");
-
-  const { lists, deleteListItem, setDeleteListItem, setLists, getListTotal } =
-    useList();
+  const {
+    lists,
+    deleteListItem,
+    setDeleteListItem,
+    setLists,
+    getListTotal,
+    itemCreate,
+    items,
+    setItems,
+  } = useList();
   const [isOpen, setOpen] = useState(false);
   const [storedItem, setStoredItem] = useState<Item | null>(null);
+  const [createItem, setCreateItem] = useState<boolean>(false);
+  const [itemName, setItemName] = useState<string | null>(null);
+  const [itemPrice, setItemPrice] = useState<string | null>(null);
   const selectedList = lists.find(
     (list: List) => list.listName === currentList
   );
-  const [items, setItems] = useState<Item[]>(
-    () =>
-      selectedList?.items.map((item: Item) => ({
-        ...item,
-        checked: item.checked ?? false,
-      })) || []
-  );
+
   const [contextMenuObject, setContextMenuObject] = useState<ContextMenuState>({
     position: { x: 0, y: 0 },
     toggled: false,
   });
   const contextMenuRef = useRef<HTMLMenuElement | null>(null);
 
+  // context menu logic
   useEffect(() => {
     function handler(e: MouseEvent) {
       if (
@@ -67,7 +70,6 @@ export default function List() {
 
     document.addEventListener("click", handler);
 
-    // Cleanup the event listener
     return () => {
       document.removeEventListener("click", handler);
     };
@@ -78,71 +80,95 @@ export default function List() {
 
   // handler functions
 
-  // handles the context menu
+  /**
+   *Handles the right click event on list element
+   *
+   * @param {React.MouseEvent<HTMLLIElement, MouseEvent>} e
+   */
   function handleOnContextMenu(e: React.MouseEvent<HTMLLIElement, MouseEvent>) {
     e.preventDefault();
     const contextMenuAttr = contextMenuRef?.current
       ? contextMenuRef.current.getBoundingClientRect()
       : null;
-    console.log(contextMenuAttr);
 
     const isLeft = e.pageX < window?.innerWidth / 2.5;
 
     if (!contextMenuAttr) return;
 
     let x;
-    const y = e.pageY;
+    const y = e.pageY - 40;
 
     if (isLeft) {
-      x = e.pageX;
+      x = e.pageX - 100;
     } else {
-      x = e.pageX - contextMenuAttr.width;
+      x = e.pageX - 200;
     }
 
     setContextMenuObject({ position: { x, y }, toggled: true });
   }
 
   // handles the items quantity change
-  const handleQuantityChange = (index: number, value: number) => {
-    const currentList = localStorage.getItem("currentList");
-    const updatedItems = [...items];
-    const currentItem = updatedItems[index];
-    const rawProductData = localStorage.getItem("productData");
-    const ProductList: { Item: string; Price: number }[] = rawProductData
-      ? JSON.parse(rawProductData)
-      : [];
-    //* selected product is not producing results(fixed)
-    const selectedProduct = ProductList.find(
-      (product: { Item: string; Price: number }) =>
-        product.Item == currentItem.item
-    );
-    if (!selectedProduct) {
-      console.error("Original product not found");
-      return;
-    }
-    const unitItemPrice = +selectedProduct.Price.toString().replace(",", ".");
 
-    updatedItems[index] = {
-      item: currentItem.item,
-      quantity: value,
-      price: parseFloat((unitItemPrice * value).toFixed(2)),
-    };
-    setItems(updatedItems);
+  /**
+   *Handles the lists items quantity change
+   *
+   * @param {number} index
+   * @param {number} value
+   */
+  const handleQuantityChange = (index: number, value: number) => {
+    const currentListName = localStorage.getItem("currentList");
+    if (!currentListName) return;
 
     const updatedLists = lists.map((list: List) => {
-      if (list.listName === currentList) {
-        return { ...list, items: updatedItems };
-      }
-      return list;
+      if (list.listName !== currentListName) return list;
+
+      const updatedItems = [...list.items];
+      const currentItem = updatedItems[index];
+      if (!currentItem) return list;
+
+      // Get original price from product data (if available)
+      const rawProductData = localStorage.getItem("productData");
+      const productData: { Item: string; Price: number }[] = rawProductData
+        ? JSON.parse(rawProductData)
+        : [];
+
+      const matchedProduct = productData.find(
+        (product) => product.Item === currentItem.item
+      );
+
+      // Use original unit price if product exists, else use item's current unit price
+      const unitPrice = matchedProduct
+        ? +matchedProduct.Price.toString().replace(",", ".")
+        : currentItem.price / currentItem.quantity;
+
+      updatedItems[index] = {
+        ...currentItem,
+        quantity: value,
+        price: parseFloat((unitPrice * value).toFixed(2)),
+      };
+
+      return {
+        ...list,
+        items: updatedItems,
+      };
     });
     setLists(updatedLists);
+
+    const currentList = updatedLists.find(
+      (l) => l.listName === currentListName
+    );
+    if (currentList) setItems(currentList.items);
   };
 
   function handleAddToList() {
     navigate(`/search`);
   }
 
-  // handle items checked states
+  /**
+   *Handles the items checked state
+   *
+   * @param {number} index
+   */
   function handleItemCheck(index: number) {
     const updatedItems = items.map((item: Item, i: number) => {
       if (i === index) {
@@ -150,7 +176,6 @@ export default function List() {
       }
       return item;
     });
-    console.log(updatedItems);
     setItems(updatedItems);
 
     const updatedLists = lists.map((list: List) => {
@@ -163,13 +188,17 @@ export default function List() {
     setLists(updatedLists);
   }
 
+  /**
+   *Handles list item delete
+   *
+   */
   function handleItemDelete() {
     if (!storedItem) return;
+
     const updatedItems = items.filter(
       (item: Item) => item.item.trim() !== storedItem.item.trim()
     );
-    console.log(`deleted item is was:${storedItem.item}`);
-    console.log(updatedItems);
+
     setItems(updatedItems);
 
     const updatedLists = lists.map((list: List) => {
@@ -180,6 +209,9 @@ export default function List() {
     });
     setLists(updatedLists);
   }
+  const [tempQuantities, setTempQuantities] = useState<(string | undefined)[]>(
+    []
+  );
 
   return (
     <>
@@ -266,16 +298,13 @@ export default function List() {
             ]}
           ></ContextMenu>
 
-          {items?.map((item: Item, index: number) => {
+          {items.map((item: Item, index: number) => {
             return (
               <li
                 key={index}
                 className={`list-item-checkbox ${
                   item.checked ? "checked" : false
                 }`}
-                onClick={() => {
-                  // e.preventDefault();
-                }}
                 onContextMenu={(e) => {
                   setStoredItem(item);
                   handleOnContextMenu(e);
@@ -284,7 +313,6 @@ export default function List() {
                 <CheckBox
                   onClick={(e) => {
                     handleItemCheck(index);
-
                     e.stopPropagation();
                   }}
                   checked={item.checked ? item.checked : false}
@@ -300,14 +328,28 @@ export default function List() {
                 >
                   <input
                     className="item-product-quantity"
-                    type="text"
-                    inputMode="numeric" // tells mobile devices to show a number pad
-                    pattern="[1-9][0-9]*"
+                    type="number"
+                    min="1"
                     value={
-                      items[index].quantity === 0 ? "" : items[index].quantity
+                      tempQuantities[index] ?? items[index].quantity.toString()
                     }
                     onChange={(e) => {
-                      handleQuantityChange(index, +e.target.value);
+                      const val = e.target.value;
+                      const numberVal = +val;
+
+                      // Temporarily store empty value
+                      const newTemps = [...tempQuantities];
+                      newTemps[index] = val;
+                      setTempQuantities(newTemps);
+
+                      // Only commit to the item state when the input is a valid number
+                      if (/^[1-9]\d*$/.test(val)) {
+                        handleQuantityChange(index, numberVal);
+
+                        // Clean up temp value
+                        newTemps[index] = undefined;
+                        setTempQuantities(newTemps);
+                      }
                     }}
                   />
                   <p className="item-product-price">
@@ -324,19 +366,54 @@ export default function List() {
             R{getListTotal(currentList !== null ? currentList : "")?.toFixed(2)}{" "}
           </h2>
         </div>
+        <div className="create-list-item" onClick={() => setCreateItem(true)}>
+          <img src="create item.svg" alt="" />
+        </div>
 
         <div className="empty-space"></div>
         <button onClick={handleAddToList} className="fixed-button">
           Forgot Something?
         </button>
       </div>
+      <Modal
+        isOpen={createItem}
+        onClose={() => {
+          setCreateItem(false);
+        }}
+        className="slide-modal"
+      >
+        <h2 className="create-item-title">Item Name</h2>
+        <input
+          className="item-name-field"
+          type="text"
+          defaultValue={itemName !== null ? itemName : ""}
+          onChange={(e) => {
+            setItemName(e.target.value);
+          }}
+        />
+        <h2 className="create-item-title">{`Price(R)`}</h2>
+        <input
+          className="item-price-field"
+          type="numeric"
+          pattern="[1-9][0-9]*"
+          onChange={(e) => {
+            setItemPrice(e.target.value);
+          }}
+        />
+        <button
+          onClick={() => {
+            itemCreate(
+              currentList !== null ? currentList : "",
+              itemName !== null ? itemName : "",
+              itemPrice !== null ? itemPrice : ""
+            );
+            setCreateItem(false);
+            setItems(selectedList ? selectedList.items : []);
+          }}
+        >
+          Add item to list
+        </button>
+      </Modal>
     </>
-
-    // // todo: add total
-    // // todo: group items if there are multiple on the list, maybe this should be implemented on the search page when the user adds it to the list, idk
-    // // todo: save check state
-    // // todo: check out price and disable quantity input on check
-    // // todo:allow list item deletion
-    // todo: create download list image( decided to make the app a pwa)
   );
 }

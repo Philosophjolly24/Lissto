@@ -41,6 +41,7 @@ export default function Lists() {
     editList,
     deleteList,
   } = useList();
+
   // states
   const [title, setTitle] = useState<string>("w");
   const [description, setDescription] = useState<string>("d");
@@ -61,6 +62,11 @@ export default function Lists() {
     }
   }, [edit, currentListName, lists]);
 
+  // Methods and handler functions
+  /**
+   *Getting title and description of the selected list, and stores it in a state
+   *
+   */
   function getCurrentListInfo() {
     const stored = localStorage.getItem("currentList");
     setCurrentListName(!stored ? "" : stored);
@@ -75,29 +81,31 @@ export default function Lists() {
     console.log(description);
   }
 
+  /**
+   * Context menu handler function
+   * @param {React.MouseEvent<HTMLHeadingElement, MouseEvent>} e
+   */
   function handleOnContextMenu(
-    e: React.MouseEvent<HTMLAnchorElement, MouseEvent>
+    e: React.MouseEvent<HTMLHeadingElement, MouseEvent>
   ) {
     e.preventDefault();
-    const contextMenuAttr = contextMenuRef?.current
-      ? contextMenuRef.current.getBoundingClientRect()
-      : null;
-    console.log(contextMenuAttr);
-
-    const isLeft = e.pageX < window?.innerWidth / 2;
-
-    if (!contextMenuAttr) return;
-
-    let x;
-    const y = e.pageY;
-
-    if (isLeft) {
-      x = e.pageX;
-    } else {
-      x = e.pageX - contextMenuAttr.width / 3;
-    }
-
-    setContextMenuObject({ position: { x, y }, toggled: true });
+    setContextMenuObject({
+      position: { x: e.pageX, y: e.pageY },
+      toggled: true,
+    });
+    setTimeout(() => {
+      const menu = contextMenuRef.current;
+      if (!menu) return;
+      const { width, height } = menu.getBoundingClientRect();
+      const maxX = window.innerWidth - width * 1.8;
+      const maxY = window.innerHeight - height;
+      const x = Math.min(e.pageX - width / 2, maxX);
+      const y = Math.min(e.pageY - height / 2, maxY);
+      setContextMenuObject({
+        position: { x, y },
+        toggled: true,
+      });
+    }, 0);
   }
 
   useEffect(() => {
@@ -109,7 +117,6 @@ export default function Lists() {
         setContextMenuObject({ position: { x: 0, y: 0 }, toggled: false });
       }
     }
-
     document.addEventListener("click", handler);
 
     // Cleanup the event listener
@@ -121,7 +128,6 @@ export default function Lists() {
   // Main component
   return (
     <>
-      {" "}
       {deleteListItem ? (
         <DialogueBox
           dialogueMessage="This can’t be undone. Delete the list?"
@@ -168,7 +174,7 @@ export default function Lists() {
       {edit ? (
         <>
           <Modal
-            className={"slide-modal slide-modal-visible edit-modal"}
+            className={"slide-modal edit-modal"}
             isOpen={edit}
             onClose={() => setEdit(false)}
           >
@@ -180,7 +186,7 @@ export default function Lists() {
                   onClick={() => {
                     setEdit(false);
                   }}
-                  src="/src/assets/close-blue.svg"
+                  src="close-blue.svg"
                   alt=""
                 />
               </div>
@@ -237,16 +243,19 @@ export default function Lists() {
               onClick={() => {
                 localStorage.setItem("currentList", list.listName);
               }}
-              onContextMenu={(e) => {
-                localStorage.setItem("currentList", list.listName);
-                setCurrentListName(list.listName);
-                getCurrentListInfo();
-                handleOnContextMenu(e);
-              }}
             >
               <div className="emoji">{list.emoji}</div>
               <div className="list-name-description-section">
-                <h2 className="list-name">
+                <h2
+                  className="list-name"
+                  onContextMenu={(e) => {
+                    e.stopPropagation();
+                    localStorage.setItem("currentList", list.listName);
+                    setCurrentListName(list.listName);
+                    getCurrentListInfo();
+                    handleOnContextMenu(e);
+                  }}
+                >
                   {list.listName.slice(0, 1).toUpperCase() +
                     list.listName.slice(1)}
                 </h2>
@@ -261,7 +270,7 @@ export default function Lists() {
                       list.description.slice(1)}
                 </p>
               </div>
-              <img className="cheveron" src="/src/assets/cheveron-right.svg" />
+              <img className="cheveron" src="cheveron-right.svg" />
             </Link>
             // </li>
           );

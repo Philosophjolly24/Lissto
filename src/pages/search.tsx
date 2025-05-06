@@ -5,14 +5,15 @@ import Modal from "../components/Modal";
 import { useNavigate } from "react-router-dom";
 import HamburgerMenu from "../components/Hamburger";
 import { useList } from "../components/useList";
+// ================================================= //
 
+// Interfaces
 interface Item {
   item: string;
   quantity: number;
   price: number;
   checked?: boolean;
 }
-
 interface List {
   listName: string;
   id: string;
@@ -21,8 +22,9 @@ interface List {
   emoji: string;
 }
 
+// ================================================= //
 export default function Search() {
-  // state declarations
+  // Hooks and states
   const [count, setCount] = useState(1);
   const [price, setPrice] = useState(0);
   const [items, setItems] = useState<{ Item: string; Price: string }[]>([]);
@@ -33,13 +35,11 @@ export default function Search() {
     Price: string;
   }>(null);
   const { lists, addItem } = useList();
+  const navigate = useNavigate();
+  const [isOpen, setOpen] = useState(false);
 
-  // interfaces and constants
-  interface Item {
-    item: string;
-    quantity: number;
-    price: number;
-  }
+  // Constants
+
   const inputRef = useRef<HTMLInputElement>(null);
   const storedName = localStorage.getItem("currentList") || " ";
   const totalPrice = (price * count).toFixed(2);
@@ -48,13 +48,12 @@ export default function Search() {
   useEffect(() => {
     const productData = localStorage.getItem("productData");
     const products = productData ? JSON.parse(productData) : [];
-    // const storedName = localStorage.getItem("currentList") || " ";
     const validProducts = products.filter((item: Item) => item.item !== "");
     setItems(validProducts);
   }, []);
 
+  //getting item count on list change
   useEffect(() => {
-    //getting count of items in list
     const storedName = localStorage.getItem("currentList") || "";
     const selected = lists.find(
       (list: List) => list.listName == storedName.trim()
@@ -62,20 +61,26 @@ export default function Search() {
     setItemCount(selected ? selected.items.length : 0);
   }, [lists]);
 
-  // checking quantity in list
-
   // creating item filter for searching
   const filteredItems = items.filter((item) =>
     item.Item.toLowerCase().includes(query.toLowerCase())
   );
 
-  // handler Functions
+  // Handler functions
+  /**
+   *Handles item click
+   *
+   * @param {{ Item: string; Price: string }} product
+   */
   const handleProductClick = (product: { Item: string; Price: string }) => {
     setSelectedProduct(product);
     setPrice(+product.Price.replace(",", "."));
   };
 
-  const onAddToList = () => {
+  /**
+   *Handles adding a item to the list
+   */
+  function handleOnAddToList() {
     if (!selectedProduct) return;
 
     addItem(storedName, {
@@ -87,18 +92,14 @@ export default function Search() {
     setSelectedProduct(null);
     setCount(1);
     setQuery("");
-  };
-  const navigate = useNavigate();
-  const [isOpen, setOpen] = useState(false);
-  // main component
+  }
+
   return (
     <>
-      {/*Note: react can't run if statements in jsx, so use conditional loops*/}
       {itemCount > 0 && (
         <button
           className="fixed-button"
           onClick={() => {
-            // handle showing cart modal or navigating to cart page
             navigate(`/list`);
           }}
         >
@@ -165,11 +166,7 @@ export default function Search() {
             <h2 className="title">{product.Item}</h2>
             <div className="container">
               <h2 className="price">R{product.Price}</h2>
-              <img
-                className="cheveron"
-                src="/src/assets/cheveron-right.svg"
-                alt=""
-              />
+              <img className="cheveron" src="cheveron-right.svg" alt="" />
             </div>
           </li>
         ))}
@@ -186,7 +183,7 @@ export default function Search() {
           <h3 className="modal-item">{selectedProduct?.Item}</h3>
           <img
             className="close"
-            src="/src/assets/close.svg"
+            src="close.svg"
             alt=""
             onClick={() => {
               setSelectedProduct(null);
@@ -200,7 +197,7 @@ export default function Search() {
         <div className="item-quantity">
           <img
             className="icon"
-            src="/src/assets/minus.svg"
+            src="minus.svg"
             alt=""
             onClick={() => {
               setCount(count - 1);
@@ -216,7 +213,7 @@ export default function Search() {
           />
           <img
             className="icon"
-            src="/src/assets/plus.svg"
+            src="plus.svg"
             alt=""
             onClick={() => {
               setCount(count + 1);
@@ -226,13 +223,12 @@ export default function Search() {
 
         <button
           onClick={() => {
-            onAddToList();
+            handleOnAddToList();
           }}
         >
           Add {count} items @ R{totalPrice}
         </button>
       </Modal>
     </>
-    // todo: add more items to the giant excel list
   );
 }

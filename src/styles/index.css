@@ -1,19 +1,19 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
 
 @import url('home.css');
-@import url('navbar.css');
-@import url('layout.css');
+@import url('Navbar.css');
+@import url('Layout.css');
 @import url('search.css');
-@import url('lists.css');
-@import url('slideModal.css');
-@import url('createList.css');
+@import url('list.css');
+@import url('Modal.css');
+@import url('CreateList.css');
 @import url('itemCount.css');
-@import url('checkbox.css');
-@import url('viewList.css');
-@import url('emojiPicker.css');
+@import url('Checkbox.css');
+@import url('AllLists.css');
+@import url('EmojiPicker.css');
 @import url('edit.css');
-@import url('dialogueBox.css');
-@import url('contextMenu.css');
+@import url('DialogueBox.css');
+@import url('ContextMenu.css');
 
 #root {
   --primary-color: #05769e;
@@ -145,6 +145,7 @@ li {
 
   .list-name {
     font-size: 36px !important;
+    width: 80%;
   }
 
   .description {

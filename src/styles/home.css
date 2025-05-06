@@ -28,7 +28,6 @@
 }
 
 .swipe-button {
-
     height: 100%;
     display: flex;
     align-items: center;
@@ -38,7 +37,6 @@
     box-sizing: border-box;
     color: rgb(238, 238, 238);
     user-select: none;
-
 }
 
 .fixed-button {
@@ -66,16 +64,12 @@
     z-index: 10 !important;
 }
 
-/* Specific colors for different actions */
 .edit-button {
     background-color: var(--primary-color);
-
 }
 
 
 
 .delete-button {
     background-color: var(--primary-color);
-    /* background-color: #ef4444;*/
-
 }

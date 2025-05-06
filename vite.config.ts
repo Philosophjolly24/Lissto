@@ -12,22 +12,24 @@ export default defineConfig({
         name: "Listicle",
         short_name: "Listicle",
         description: "Offline-capable shopping checklist app",
-        start_url: ".",
+        start_url: "/",
         display: "standalone",
         background_color: "#ffffff",
         theme_color: "#05769e",
-        icons: [  
+        icons: [
           {
-            src: "pwa-192x192.png",
-            sizes: "192x192",
-            type: "image/png",
-          },
-          {
-            src: "pwa-512x512.png",
-            sizes: "512x512",
-            type: "image/png",
+            src: "icon.svg",
+            sizes: "48x48 72x72 96x96 128x128 256x256",
+            type: "image/svg+xml",
           },
         ],
+      },
+      devOptions: {
+        enabled: true, // 👈 important for dev
+      },
+      workbox: {
+        navigateFallback: "/index.html", // ✅ fallback for SPA routes
+        globPatterns: ["**/*.{js,css,html,ico,png,svg}"], // ensure all assets are cached
       },
     }),
   ],

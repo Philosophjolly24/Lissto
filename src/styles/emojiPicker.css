@@ -4,7 +4,6 @@
     justify-content: center;
     width: 100%;
     margin-bottom: 25px;
-
 }
 
 .epr-category-nav {
@@ -23,15 +22,12 @@ emoji-picker {
     --emoji-size: 1.5rem;
     --background: #ffffff;
     --border-radius: 10px;
-    /* --border-color: #05769e; */
     --border-size: 2px;
     --category-emoji-size: 0;
     --category-font-size: 0;
     --category-font-color: transparent;
     --recommendation-emoji-size: 0;
     --recommendation-font-size: 0;
-
-
 
     .nav {
         display: none;
@@ -46,7 +42,6 @@ emoji-picker {
         --emoji-size: 2rem;
         --background: #ffffff;
         --border-radius: 10px;
-        /* --border-color: #05769e; */
         --border-size: 2px;
         --category-emoji-size: 0;
         --category-font-size: 0;

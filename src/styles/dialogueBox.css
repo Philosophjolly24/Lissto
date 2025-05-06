@@ -1,49 +1,50 @@
-.dialogue-box {
+.modal-backdrop {
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
-    position: fixed;
-    width: 95%;
-    min-width: 340px;
-    margin: auto !important;
-    height: 230px;
-    left: 2.5%;
-    z-index: 1000;
-    background-color: white;
-    padding: 1rem;
-    font-size: 24px;
-    color: var(--primary-color);
-    font-weight: 800;
-    border-radius: 10px;
 
-
-
-    .dialogue-message {
-        text-align: center;
-    }
-
-    .button-container {
+    .dialogue-box {
         display: flex;
-        gap: 20px;
-        width: 100%;
-        margin-top: 20px;
+        flex-direction: column;
         align-items: center;
         justify-content: center;
+        position: fixed;
+        width: 95%;
+        min-width: 340px;
+        height: 230px;
+        left: 2.5%;
+        z-index: 1000;
+        background-color: white;
+        padding: 1rem;
+        font-size: 24px;
+        color: var(--primary-color);
+        font-weight: 800;
+        border-radius: 10px;
 
-        >.dialogue-button {
-            width: 160px;
-            height: 50px;
-            background-color: #fff;
-            border: 2px solid var(--primary-color);
-            border-radius: 10px;
-            outline: none;
-            font-size: 24px;
-            font-weight: 700;
-            color: var(--primary-color);
-            box-shadow: none;
+        .dialogue-message {
+            text-align: center;
         }
 
-    }
+        .button-container {
+            display: flex;
+            gap: 20px;
+            width: 100%;
+            margin-top: 20px;
+            align-items: center;
+            justify-content: center;
 
+            >.dialogue-button {
+                width: 160px;
+                height: 50px;
+                background-color: #fff;
+                border: 2px solid var(--primary-color);
+                border-radius: 10px;
+                outline: none;
+                font-size: 24px;
+                font-weight: 700;
+                color: var(--primary-color);
+                box-shadow: none;
+            }
+        }
+    }
 }

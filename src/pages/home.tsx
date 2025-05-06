@@ -1,15 +1,18 @@
+// Imports
 import "../styles/index.css";
 import Lists from "../components/AllLists";
 import HamburgerMenu from "../components/Hamburger";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useList } from "../components/useList";
+// ================================================= //
 
 export default function Home() {
+  // States and hooks
   const [isOpen, setOpen] = useState(false);
-
   const { lists } = useList();
   const navigate = useNavigate();
+
   return (
     <>
       <div className="title-hamburger-container">
@@ -64,8 +67,5 @@ export default function Home() {
         </button>
       </div>
     </>
-    // todo: shorten the title name if it is too long
-    // todo: create list management modal(add,delete,rename)
-    // todo: optional(download list) TBD
   );
 }

@@ -15,7 +15,7 @@ function App() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch("/data.xlsx");
+      const response = await fetch("data.xlsx");
       const arrayBuffer = await response.arrayBuffer();
       const workbook = xlsx.read(arrayBuffer, { type: "array" });
       const giantSheet = workbook.Sheets[workbook.SheetNames[0]];

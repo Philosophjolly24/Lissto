@@ -1,12 +1,12 @@
 // Imports
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-// import EmojiPick from "../components/EmojiPicker";
-// import { EmojiClickData } from "emoji-picker-react";
 import HamburgerMenu from "../components/Hamburger";
 import { useList } from "../components/useList";
 import "emoji-picker-element";
 import { v4 as uuidv4 } from "uuid";
+
+// ================================================= //
 
 export default function Create() {
   // states & hooks
@@ -18,7 +18,14 @@ export default function Create() {
   const navigate = useNavigate();
   const { lists, addList } = useList();
 
-  // handle events
+  // Handler functions
+
+  /**
+   * handles the create button click event
+   *
+   * @param {string} listName
+   * @param {string} description
+   */
   function handleClick(listName: string, description: string) {
     localStorage.setItem("currentList", listName);
     const trimmedName = listName.trim();
@@ -47,10 +54,8 @@ export default function Create() {
     addList(newList);
     navigate(`/search`);
   }
-  // const handleEmojiClick = (emojiData: EmojiClickData) => {
-  //   setText(emojiData.emoji);
-  // };
 
+  // Emoji picker logic
   useEffect(() => {
     const emojiPicker = document.querySelector("emoji-picker");
 
@@ -158,5 +163,4 @@ export default function Create() {
       </div>
     </div>
   );
-  // todo: test this stage and make sure there are no bugs or loopholes
 }

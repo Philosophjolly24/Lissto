@@ -8,11 +8,11 @@
     left: 0;
     width: 100%;
     height: 45vh;
-    z-index: 1000;
-    transform: translateY(110%);
+    z-index: 10000;
+    animation: slide-animation 0.4s;
     transition: transform 0.7s ease;
     background-color: white;
-    padding: 1rem;
+    padding: 0 1rem;
     border-radius: 1rem 1rem 0 0;
     gap: 20px;
 
@@ -20,12 +20,10 @@
         width: 100%;
         display: flex;
         flex-direction: row;
-        /* justify-content: space-between; */
 
         >.modal-item {
             width: 100%;
             display: flex;
-            /* align-items: center; */
             justify-content: center;
             font-size: 28px;
             text-decoration: underline;
@@ -46,7 +44,6 @@
         font-size: 28px;
         font-weight: 700;
         text-align: center;
-
     }
 
     >button {
@@ -59,14 +56,8 @@
         font-weight: 620;
         color: #fff;
         background-color: var(--primary-color);
-
     }
 
-}
-
-.slide-modal-visible {
-    transition: all 0.7s ease 0s;
-    transform: translateY(0);
 }
 
 .modal-backdrop {
@@ -95,14 +86,29 @@
         text-align: center;
         border: none;
 
-        >&:focus {
+        >.quantity-input:focus {
             border: 1px solid var(--light-text);
             outline: none;
         }
     }
 
+    >.quantity-input:focus {
+        border: 1px solid var(--light-text);
+        outline: none;
+    }
+
     >.icon {
         width: 24px;
         height: 24px;
+    }
+}
+
+@keyframes slide-animation {
+    from {
+        bottom: -100%;
+    }
+
+    to {
+        bottom: 0%;
     }
 }

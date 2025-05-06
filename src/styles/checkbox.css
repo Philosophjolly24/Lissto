@@ -42,7 +42,6 @@
 .custom-checkbox input:checked~.checkbox-label {
     text-decoration: line-through;
     color: var(--light-text);
-
 }
 
 /* Label text */
@@ -50,5 +49,4 @@
     font-size: 16px;
     color: #000;
     margin: 0;
-
 }
