@@ -1,6 +1,6 @@
-# Listicle
+# Listoria
 
-**Listicle** is a web-based list management application that allows users to create and manage multiple lists of products. Built with React, TypeScript, and Vite, Listicle uses modern web development practices and browser `localStorage` for data persistence.
+**Listoria** is a web-based list management application that allows users to create and manage multiple lists of products. Built with React, TypeScript, and Vite, Listoria uses modern web development practices and browser `localStorage` for data persistence.
 
 ---
 
@@ -16,7 +16,7 @@
 
 ## 🎨 Demo
 
-> [Visit demo site](https://listicle-69v.pages.dev/)
+> [Visit demo site](https://listoria.pages.dev/)
 
 ---
 
@@ -32,8 +32,8 @@
 1. **Clone the repository**
 
    ```bash
-   git clone https://github.com/Philosophjolly24/Listicle.git
-   cd Listicle
+   git clone https://github.com/Philosophjolly24/Listoria.git
+   cd Listoria
    ```
 
 2. **Install dependencies**
@@ -60,7 +60,7 @@
 ## 📂 Folder Structure
 
 ```text
-Listicle/
+Listoria/
 ├── public/           # Static assets
 ├── src/              # Application source code
 │   ├── components/   # Reusable React components (Modals, Lists, Products)
