@@ -1,6 +1,6 @@
 # Listoria
 
-**Listoria** is a web-based list management application that allows users to create and manage multiple lists of products. Built with React, TypeScript, and Vite, Listoria uses modern web development practices and browser `localStorage` for data persistence.
+**Listoria** is a web-based list management application designed for shopping at Giant Hyper. Built with React, TypeScript, and Vite, Listoria enables users to create and manage multiple product lists with ease. It follows modern web development practices and uses the browser’s localStorage for persistent data storage.
 
 ---
 
