@@ -3,6 +3,7 @@ interface ContextMenuProps {
   isToggled: boolean;
   positionX: number;
   positionY: number;
+  className?: string;
   buttons: {
     text: string;
     onClick: () => void;
@@ -16,11 +17,12 @@ export default function ContextMenu({
   positionX,
   positionY,
   buttons,
+  className,
 }: ContextMenuProps) {
   return (
     <menu
       ref={contextMenuRef}
-      className={`context-menu ${isToggled ? "active" : "hidden"}`}
+      className={`context-menu ${isToggled ? "active" : "hidden"} ${className}`}
       style={{
         top: `${positionY}px`,
         left: `${positionX}px`,

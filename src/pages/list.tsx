@@ -258,6 +258,7 @@ export default function List() {
           )}
 
           <ContextMenu
+            className="context-menu-item"
             contextMenuRef={contextMenuRef}
             isToggled={contextMenuObject.toggled}
             positionX={contextMenuObject.position.x}
