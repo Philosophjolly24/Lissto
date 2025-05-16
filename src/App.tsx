@@ -22,9 +22,9 @@ function App() {
       const json = xlsx.utils.sheet_to_json(giantSheet) as unknown[];
       setJsonData(json as string[]);
     };
-
     fetchData();
   }, []);
+
   useEffect(() => {
     if (jsonData.length > 0) {
       localStorage.setItem("productData", JSON.stringify(jsonData)); // Save to localStorage
