@@ -16,7 +16,7 @@
 
 ## 🎨 Demo
 
-> [Visit demo site](https://lissto.pages.dev/)
+> [Visit demo site](https://lissto-app.pages.dev/)
 
 ---
 
