@@ -1,6 +1,6 @@
-# Listoria
+# Lissto
 
-**Listoria** is a web-based list management application designed for shopping at Giant Hyper. Built with React, TypeScript, and Vite, Listoria enables users to create and manage multiple product lists with ease. It follows modern web development practices and uses the browser’s localStorage for persistent data storage.
+**Lissto** is a web-based list management application designed for shopping at Giant Hyper. Built with React, TypeScript, and Vite, Lissto enables users to create and manage multiple product lists with ease. It follows modern web development practices and uses the browser’s localStorage for persistent data storage.
 
 ---
 
@@ -16,7 +16,7 @@
 
 ## 🎨 Demo
 
-> [Visit demo site](https://listoria.pages.dev/)
+> [Visit demo site](https://lissto.pages.dev/)
 
 ---
 
@@ -32,8 +32,8 @@
 1. **Clone the repository**
 
    ```bash
-   git clone https://github.com/Philosophjolly24/Listoria.git
-   cd Listoria
+   git clone https://github.com/Philosophjolly24/Lissto.git
+   cd Lissto
    ```
 
 2. **Install dependencies**
@@ -60,7 +60,7 @@
 ## 📂 Folder Structure
 
 ```text
-Listoria/
+Lissto/
 ├── public/           # Static assets
 ├── src/              # Application source code
 │   ├── components/   # Reusable React components (Modals, Lists, Products)
