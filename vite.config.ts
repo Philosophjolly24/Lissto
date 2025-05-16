@@ -9,8 +9,8 @@ export default defineConfig({
       registerType: "autoUpdate",
       includeAssets: ["favicon.ico", "robots.txt", "apple-touch-icon.png"],
       manifest: {
-        name: "Listoria",
-        short_name: "Listoria",
+        name: "Lissto",
+        short_name: "Lissto",
         description: "Offline-capable shopping checklist app",
         start_url: "/",
         display: "standalone",
